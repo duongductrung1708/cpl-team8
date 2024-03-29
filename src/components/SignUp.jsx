@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const nav = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -34,7 +33,7 @@ const SignUp = () => {
 
       if (response.ok) {
         localStorage.setItem("auth-token", responseData.user.token);
-        nav("/home");
+        window.location.replace("/home");
       } else {
         if (responseData.errors) {
           const messages = Object.values(responseData.errors).flatMap(
