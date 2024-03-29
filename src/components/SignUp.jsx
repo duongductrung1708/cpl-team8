@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Footer from "./Footer";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -138,6 +139,7 @@ const SignUp = () => {
           </Col>
         </Row>
       </Container>
+      <Footer />
     </div>
   );
 };
