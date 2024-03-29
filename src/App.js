@@ -6,6 +6,7 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./components/HomePage";
+import Setting from "./components/User/Setting";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/home" component={Home} element={<HomePage />} />
           <Route path="/signin" component={SignIn} element={<SignIn />}/>
           <Route path="/signup" component={SignUp} element={<SignUp />}/>
+          <Route path="/settings" component={Setting} element={<Setting />}/>
         </Routes>
       </div>
     </Router>
