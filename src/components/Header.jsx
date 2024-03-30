@@ -68,7 +68,7 @@ const Header = () => {
                   as={Link}
                   to="/home"
                   className={
-                    location.pathname === "/home" ? "text-black" : "text-muted"
+                    location.pathname === "/home" ? "text-black" : "text-secondary"
                   }
                 >
                   Home
@@ -81,7 +81,7 @@ const Header = () => {
                       className={
                         location.pathname === "/signin"
                           ? "text-black"
-                          : "text-muted"
+                          : "text-secondary"
                       }
                     >
                       Sign in
@@ -92,7 +92,7 @@ const Header = () => {
                       className={
                         location.pathname === "/signup"
                           ? "text-black"
-                          : "text-muted"
+                          : "text-secondary"
                       }
                     >
                       Sign up
@@ -108,7 +108,7 @@ const Header = () => {
                     className={
                       location.pathname === "/editor"
                         ? "text-black"
-                        : "text-muted"
+                        : "text-secondary"
                     }
                   >
                     <svg
@@ -133,7 +133,7 @@ const Header = () => {
                     className={
                       location.pathname === "/settings"
                         ? "text-black"
-                        : "text-muted"
+                        : "text-secondary"
                     }
                   >
                     <svg
@@ -153,9 +153,9 @@ const Header = () => {
                       as={Link}
                       to={`/profile/${username}`}
                       className={
-                        location.pathname === "/settings"
+                        location.pathname === `/profile/${username}`
                           ? "text-black"
-                          : "text-muted"
+                          : "text-secondary"
                       }
                     >
                       <img

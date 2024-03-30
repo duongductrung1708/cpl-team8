@@ -7,6 +7,7 @@ import SignUp from "./components/SignUp";
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./components/HomePage";
 import Setting from "./components/User/Setting";
+import UserProfile from "./components/User/UserProfile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/signin" component={SignIn} element={<SignIn />}/>
           <Route path="/signup" component={SignUp} element={<SignUp />}/>
           <Route path="/settings" component={Setting} element={<Setting />}/>
+          <Route path="/profile/:username" component={UserProfile} element={<UserProfile />}/>
         </Routes>
       </div>
     </Router>
