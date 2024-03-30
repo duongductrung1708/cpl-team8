@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const getUserProfile = async () => {
   try {
@@ -37,7 +37,8 @@ const updateUserProfile = async (userData) => {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to update user profile");
+      const responseData = await response.json();
+      throw new Error(responseData.errors ? responseData.errors : "Failed to update user profile");
     }
 
     const updatedUserData = await response.json();
@@ -56,6 +57,7 @@ const Setting = () => {
     bio: "",
     image: "",
   });
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,6 +91,7 @@ const Setting = () => {
       window.location.reload();
     } catch (error) {
       console.error("Error updating user profile:", error);
+      setError(error.message);
     }
   };
 
@@ -112,6 +115,9 @@ const Setting = () => {
               }}
             >
               <h1 className="text-center">Your Settings</h1>
+              {error && <ul className="text-danger fw-bold">
+                <li>{error}</li>
+                </ul>}
               <form onSubmit={handleSubmit}>
                 <fieldset>
                   <fieldset
@@ -229,6 +235,57 @@ const Setting = () => {
           </div>
         </Container>
       </div>
+      <footer
+        className="footer position-absolute"
+        style={{
+          background: "#f3f3f3",
+          marginTop: "3rem",
+          padding: "1rem 0",
+          width: "100%",
+        }}
+      >
+        <Container>
+          <Link
+            className="logo-font"
+            to={"/home"}
+            previewlistener="true"
+            style={{
+              verticalAlign: "middle",
+              color: "#5cb85c",
+              textDecoration: "none",
+              fontWeight: "700",
+              backgroundColor: "transparent",
+            }}
+          >
+            conduit
+          </Link>
+          <span
+            className="attribution"
+            style={{
+              verticalAlign: "middle",
+              marginLeft: "10px",
+              fontSize: ".8rem",
+              color: "#bbb",
+              fontWeight: "300",
+            }}
+          >
+            An interactive learning project from{" "}
+            <Link
+              to={"https://thinkster.io"}
+              previewlistener="true"
+              style={{
+                touchAction: "manipulation",
+                color: "#5cb85c",
+                textDecoration: "none",
+                backgroundColor: "transparent",
+              }}
+            >
+              Thinkster
+            </Link>
+            . Code &amp; design licensed under MIT.
+          </span>
+        </Container>
+      </footer>
     </div>
   );
 };

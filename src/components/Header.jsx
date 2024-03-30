@@ -27,6 +27,7 @@ const getUserInfo = async () => {
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState(null);
+  const [userImage, setUserImage] = useState(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -37,6 +38,7 @@ const Header = () => {
         try {
           const userData = await getUserInfo();
           setUsername(userData.user.username);
+          setUserImage(userData.user.image);
         } catch (error) {
           console.error("Error getting user information:", error);
         }
@@ -68,7 +70,7 @@ const Header = () => {
                   as={Link}
                   to="/home"
                   className={
-                    location.pathname === "/home" ? "text-black" : "text-muted"
+                    location.pathname === "/home" ? "text-black" : "text-secondary"
                   }
                 >
                   Home
@@ -81,7 +83,7 @@ const Header = () => {
                       className={
                         location.pathname === "/signin"
                           ? "text-black"
-                          : "text-muted"
+                          : "text-secondary"
                       }
                     >
                       Sign in
@@ -92,7 +94,7 @@ const Header = () => {
                       className={
                         location.pathname === "/signup"
                           ? "text-black"
-                          : "text-muted"
+                          : "text-secondary"
                       }
                     >
                       Sign up
@@ -108,7 +110,7 @@ const Header = () => {
                     className={
                       location.pathname === "/editor"
                         ? "text-black"
-                        : "text-muted"
+                        : "text-secondary"
                     }
                   >
                     <svg
@@ -133,7 +135,7 @@ const Header = () => {
                     className={
                       location.pathname === "/settings"
                         ? "text-black"
-                        : "text-muted"
+                        : "text-secondary"
                     }
                   >
                     <svg
@@ -153,9 +155,9 @@ const Header = () => {
                       as={Link}
                       to={`/profile/${username}`}
                       className={
-                        location.pathname === "/settings"
+                        location.pathname === `/profile/${username}`
                           ? "text-black"
-                          : "text-muted"
+                          : "text-secondary"
                       }
                     >
                       <img
@@ -165,8 +167,8 @@ const Header = () => {
                           float: "left",
                           marginRight: "5px",
                         }}
-                        src="https://api.realworld.io/images/smiley-cyrus.jpeg"
-                        className="user-pic"
+                        src={userImage}
+                        className="user-pic img-fluid"
                         alt={username}
                       />
                       {username}
