@@ -37,7 +37,8 @@ const updateUserProfile = async (userData) => {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to update user profile");
+      const responseData = await response.json();
+      throw new Error(responseData.errors ? responseData.errors : "Failed to update user profile");
     }
 
     const updatedUserData = await response.json();
@@ -56,6 +57,7 @@ const Setting = () => {
     bio: "",
     image: "",
   });
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,6 +91,7 @@ const Setting = () => {
       window.location.reload();
     } catch (error) {
       console.error("Error updating user profile:", error);
+      setError(error.message);
     }
   };
 
@@ -112,6 +115,9 @@ const Setting = () => {
               }}
             >
               <h1 className="text-center">Your Settings</h1>
+              {error && <ul className="text-danger fw-bold">
+                <li>{error}</li>
+                </ul>}
               <form onSubmit={handleSubmit}>
                 <fieldset>
                   <fieldset
