@@ -8,6 +8,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from "./components/HomePage";
 import Setting from "./components/User/Setting";
 import UserProfile from "./components/User/UserProfile";
+import CreateArticle from "./components/User/CreateArticle";
+import Favorite from "./components/User/Favorite";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
           <Route path="/signup" component={SignUp} element={<SignUp />}/>
           <Route path="/settings" component={Setting} element={<Setting />}/>
           <Route path="/profile/:username" component={UserProfile} element={<UserProfile />}/>
+          <Route path="/profile/:username/favorites" component={Favorite} element={<Favorite />}/>
+          <Route path="/editor" component={CreateArticle} element={<CreateArticle />}/>
         </Routes>
       </div>
     </Router>
