@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../Footer";
+import "../css/styles.css";
 
 const getUserProfileByUsername = async (username) => {
   try {
@@ -155,6 +156,21 @@ const Favorite = () => {
                     {userProfile.username}
                   </h4>
                   <p>{userProfile.bio}</p>
+                  <button
+                    style={{
+                      float: "right",
+                      color: "#999",
+                      border: "1px solid #999",
+                      padding: ".25rem .5rem",
+                      fontSize: ".875rem",
+                      borderRadius: ".2rem",
+                      backgroundImage: "none",
+                      backgroundColor: "transparent",
+                    }}
+                    className="setting-btn btn btn-sm action-btn btn-outline-secondary"
+                  >
+                    <i class="ion-plus-round"></i>&nbsp; Follow Maksim Esteban
+                  </button>
                   <Link
                     style={{
                       float: "right",
@@ -166,7 +182,7 @@ const Favorite = () => {
                       backgroundImage: "none",
                       backgroundColor: "transparent",
                     }}
-                    className="btn btn-sm btn-outline-secondary action-btn"
+                    className="setting-btn btn btn-sm btn-outline-secondary action-btn"
                     to={"/settings"}
                     previewlistener="true"
                   >
@@ -318,7 +334,7 @@ const Favorite = () => {
                           </span>
                         </div>
                         <button
-                          className="btn btn-sm btn-outline-primary pull-xs-right"
+                          className="heart-btn btn btn-sm btn-outline-primary pull-xs-right"
                           style={{
                             float: "right",
                             padding: ".25rem .5rem",
@@ -354,7 +370,14 @@ const Favorite = () => {
                           >
                             <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1" />
                           </svg>{" "}
-                          <span className="favorites-count">
+                          <span
+                            className="favorites-count"
+                            style={{
+                              color: article.favorited
+                                ? "#fff"
+                                : "currentColor",
+                            }}
+                          >
                             {article.favoritesCount}
                           </span>
                         </button>

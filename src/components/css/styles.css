@@ -1,0 +1,15 @@
+.heart-btn:hover {
+    background: green !important;
+}
+
+.heart-btn:active {
+    background: rgb(0, 103, 0) !important;
+}
+
+.setting-btn:hover{
+    background: #d0d0d0 !important;
+}
+
+.setting-btn:active{
+    background: #b9b9b9 !important;
+}
