@@ -11,6 +11,7 @@ const getUserProfileByUsername = async (username) => {
         method: "GET",
         headers: {
           Accept: "application/json",
+          Authorization: `Token ${localStorage.getItem("auth-token")}`,
         },
       }
     );
@@ -35,6 +36,7 @@ const getUserArticlesByUsername = async (username) => {
         method: "GET",
         headers: {
           Accept: "application/json",
+          Authorization: `Token ${localStorage.getItem("auth-token")}`,
         },
       }
     );
@@ -51,12 +53,15 @@ const getUserArticlesByUsername = async (username) => {
   }
 };
 
+
+
 const UserProfile = () => {
   const { username } = useParams();
   const [userProfile, setUserProfile] = useState(null);
   const [userArticles, setUserArticles] = useState([]);
 
   useEffect(() => {
+   
     const fetchProfile = async () => {
       try {
         const profileData = await getUserProfileByUsername(username);
@@ -65,7 +70,7 @@ const UserProfile = () => {
         console.error("Error fetching user profile:", error);
       }
     };
-
+  
     const fetchUserArticles = async () => {
       try {
         const articlesData = await getUserArticlesByUsername(username);
@@ -74,11 +79,14 @@ const UserProfile = () => {
         console.error("Error fetching user articles:", error);
       }
     };
-
+    
     fetchProfile();
     fetchUserArticles();
+    
   }, [username]);
+  
 
+ 
   return (
     <div className="profile-page">
       {userProfile && (
