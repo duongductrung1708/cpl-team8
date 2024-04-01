@@ -1,6 +1,5 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import Footer from "./Footer";
 
 const HomePage = () => {
   return (
@@ -37,7 +36,6 @@ const HomePage = () => {
           </p>
         </Container>
       </div>
-      <Footer />
     </div>
   );
 };
