@@ -11,6 +11,7 @@ const getUserProfileByUsername = async (username) => {
         method: "GET",
         headers: {
           Accept: "application/json",
+          Authorization: `Token ${localStorage.getItem("auth-token")}`,
         },
       }
     );
@@ -35,6 +36,7 @@ const getUserArticlesByUsername = async (username) => {
         method: "GET",
         headers: {
           Accept: "application/json",
+          Authorization: `Token ${localStorage.getItem("auth-token")}`,
         },
       }
     );

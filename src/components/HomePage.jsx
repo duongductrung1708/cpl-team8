@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import Footer from "./Footer";
+import API from "../api/API.js";
+import ArticleList from "./ArticleList.jsx";
 
 const HomePage = () => {
+  const [articlesGlobal, setArticleGlobal] = useState(null);
+
+  useEffect(() => {
+    API.getArticles(1, 10).then((data) => {
+      setArticleGlobal(data);
+    });
+  }, []);
+
   return (
     <div>
       <div
@@ -37,6 +47,19 @@ const HomePage = () => {
           </p>
         </Container>
       </div>
+      <Container>
+        <div className="border-bottom">
+          <ul className="nav">
+            <li
+              className="nav-item py-2 px-3 active"
+              style={{ color: "rgb(92, 184, 92)" }}
+            >
+              Global Feed
+            </li>
+          </ul>
+        </div>
+        <ArticleList articleList={articlesGlobal} />
+      </Container>
       <Footer />
     </div>
   );
