@@ -1,38 +1,134 @@
-.App {
-  text-align: center;
+.nav-item.active {
+  border-bottom: 2px solid rgb(92, 184, 92);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.article-preview {
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  padding: 1.5rem 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.article-preview .article-meta {
+  margin: 0 0 1rem;
+}
+.article-meta {
+  display: block;
+  position: relative;
+  font-weight: 300;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.article-meta img {
+  border-radius: 50%;
 }
 
-.App-link {
-  color: #61dafb;
+.preview-link {
+  color: inherit !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.article-preview .preview-link h1 {
+  font-weight: 600 !important;
+  font-size: 1.5rem !important;
+  margin-bottom: 3px;
+}
+
+.article-preview .preview-link p {
+  font-weight: 300;
+  font-size: 24px;
+  color: #999;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  line-height: 1.3rem;
+}
+
+.article-preview .preview-link span {
+  max-width: 30%;
+  font-size: .8rem;
+  font-weight: 300;
+  color: #bbb;
+  vertical-align: middle;
+}
+
+.article-preview .preview-link ul {
+  float: right;
+  max-width: 50%;
+  vertical-align: top;
+}
+
+.article-preview a {
+  text-decoration: none;
+}
+
+ul.tag-list {
+  padding-left: 0 !important;
+  display: inline-block;
+  list-style: none !important;
+}
+
+.article-preview .preview-link ul li {
+  font-weight: 300;
+  font-size: .8rem !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.tag-default.tag-outline {
+  border: 1px solid #ddd;
+  color: #aaa !important;
+  background: 0 0 !important;
+}
+ul.tag-list li {
+  display: inline-block !important;
+}
+.tag-default {
+  color: #fff !important;
+  font-size: .8rem;
+  padding-top: .1rem;
+  padding-bottom: .1rem;
+  white-space: nowrap;
+  margin-right: 3px;
+  margin-bottom: .2rem;
+  display: inline-block;
+}
+.tag-default {
+  background-color: #818a91;
+}
+.tag-pill {
+  padding-right: .6em;
+  padding-left: .6em;
+  border-radius: 10rem;
+}
+
+.article-meta .info .date {
+  color: #bbb;
+  font-size: .8rem;
+  display: block;
+}
+
+.article-meta .info .author {
+  display: block;
+  font-weight: 500 !important;
+  color: rgb(92, 184, 92);
+}
+
+.btn-outline-primary {
+  color: #5cb85c !important;
+  background-image: none;
+  background-color: transparent;
+  border-color: #5cb85c !important;
+}
+
+.btn-outline-primary:hover {
+  color: #fff !important;
+  background-color: #5cb85c !important;
+  border-color: #5cb85c !important;
+}
+
+.btn-primary {
+  color: #fff !important;
+  background-color: #5cb85c !important;
+  border-color: #5cb85c !important;
+}
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #449d44 !important;
+  border-color: #419641 !important;
 }
