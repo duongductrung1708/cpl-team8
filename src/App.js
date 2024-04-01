@@ -1,10 +1,12 @@
 import React from "react";
+import './App.css';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/HomePage";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import HomePage from "./components/HomePage";
 import Setting from "./components/User/Setting";
 import UserProfile from "./components/User/UserProfile";
