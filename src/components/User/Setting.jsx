@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Footer";
 
 const getUserProfile = async () => {
   try {
@@ -235,6 +236,7 @@ const Setting = () => {
           </div>
         </Container>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import Footer from "../Footer";
 
 const getUserProfileByUsername = async (username) => {
   try {
@@ -454,6 +455,7 @@ const Favorite = () => {
           </Container>
         </>
       )}
+      <Footer />
     </div>
   );
 };

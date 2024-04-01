@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
+import Footer from "../Footer";
 
 const CreateArticle = () => {
   const [formData, setFormData] = useState({
@@ -159,6 +160,7 @@ const CreateArticle = () => {
           </div>
         </div>
       </Container>
+      <Footer />
     </div>
   );
 };
