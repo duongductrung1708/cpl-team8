@@ -10,7 +10,6 @@ import Setting from "./components/User/Setting";
 import UserProfile from "./components/User/UserProfile";
 import CreateArticle from "./components/User/CreateArticle";
 import Favorite from "./components/User/Favorite";
-import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -27,7 +26,6 @@ function App() {
           <Route path="/profile/:username/favorites" component={Favorite} element={<Favorite />}/>
           <Route path="/editor" component={CreateArticle} element={<CreateArticle />}/>
         </Routes>
-        <Footer />
       </div>
     </Router>
   );
