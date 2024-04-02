@@ -20,12 +20,42 @@ API.getArticles = async (page, limit, token) => {
   }
 };
 
+API.getArticlesByTag = async (page, limit, token, tag) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `${token ? `Token ${token}` : ""}`,
+      },
+    };
+    const res = await axios.get(
+      BASE_URL + `/articles?offset=${(page - 1) * limit}&limit=${limit}&tag=${tag}`,
+      config
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+API.getArticlesOfFollowed = async (page, limit, token) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: "Token " + token,
+      },
+    };
+    const res = await axios.get(BASE_URL + `/articles/feed?offset=${(page - 1) * limit}&limit=${limit}`, config);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 API.getTags = async () => {
   try {
     const res = await axios.get(BASE_URL + `/tags`);
     return res.data;
-      } catch (error) {
+  } catch (error) {
     console.log(error);
   }
 };
@@ -41,9 +71,10 @@ API.toggleLikeArticle = async (slug, isLiked) => {
       };
       const res = await axios(BASE_URL + `/articles/${slug}/favorite`, config);
       return res.data;
-    }} catch (error) {
-      console.log(error);
     }
-  };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export default API;
