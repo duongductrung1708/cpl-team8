@@ -105,7 +105,7 @@ const Setting = () => {
 
   return (
     <div>
-      <div className="settings-page">
+      <div className="settings-page" style={{height: "520px"}}>
         <Container className="page" style={{ marginTop: "1.5rem" }}>
           <div className="row">
             <div
@@ -230,7 +230,7 @@ const Setting = () => {
                 </fieldset>
               </form>
               <hr />
-              <button className="btn btn-outline-danger" onClick={handleLogout}>
+              <button className="btn btn-outline-danger" style={{marginBottom: "5rem"}} onClick={handleLogout}>
                 Or click here to logout.
               </button>
             </div>
