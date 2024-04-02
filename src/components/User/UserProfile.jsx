@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../Footer";
+import '../css/styles.css';
 
 const getUserProfileByUsername = async (username) => {
   try {
@@ -53,13 +54,71 @@ const getUserArticlesByUsername = async (username) => {
   }
 };
 
+const toggleFavoriteArticle = async (slug, isFavorited) => {
+  try {
+    const method = isFavorited ? "DELETE" : "POST";
+    const response = await fetch(
+      `https://api.realworld.io/api/articles/${slug}/favorite`,
+      {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem("auth-token")}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to toggle favorite status");
+    }
+
+    const favoritedArticle = await response.json();
+    console.log("Article favorited:", favoritedArticle);
+    return favoritedArticle;
+  } catch (error) {
+    console.error("Error toggling favorite status:", error);
+    throw error;
+  }
+};
+
+const followUser = async (username, isFollowing) => {
+  try {
+    const method = isFollowing ? "DELETE" : "POST";
+    const response = await fetch(
+      `https://api.realworld.io/api/profiles/${username}/follow`,
+      {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Token ${localStorage.getItem("auth-token")}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to toggle follow status");
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("Error toggling follow status:", error);
+    throw error;
+  }
+};
+
 const UserProfile = () => {
   const { username } = useParams();
   const [userProfile, setUserProfile] = useState(null);
   const [userArticles, setUserArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [authenticatedUsername, setAuthenticatedUsername] = useState("");
+  const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
+    const authUsername = localStorage.getItem("auth-username");
+    console.log("Authenticated Username from Local Storage:", authUsername);
+    setAuthenticatedUsername(authUsername);
+
     const fetchProfile = async () => {
       try {
         const profileData = await getUserProfileByUsername(username);
@@ -83,6 +142,31 @@ const UserProfile = () => {
     fetchProfile();
     fetchUserArticles();
   }, [username]);
+
+  const handleToggleFavorite = async (slug, isFavorited) => {
+    try {
+      const updatedArticle = await toggleFavoriteArticle(slug, isFavorited);
+      setUserArticles((prevUserArticles) => {
+        const index = prevUserArticles.findIndex(
+          (article) => article.slug === slug
+        );
+        const updatedArticles = [...prevUserArticles];
+        updatedArticles[index] = updatedArticle.article;
+        return updatedArticles;
+      });
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  };
+
+  const handleToggleFollow = async () => {
+    try {
+      const updatedProfile = await followUser(username, isFollowing);
+      setIsFollowing(updatedProfile.profile.following);
+    } catch (error) {
+      console.error("Error toggling follow:", error);
+    }
+  };
 
   return (
     <div className="profile-page">
@@ -110,33 +194,52 @@ const UserProfile = () => {
                     {userProfile.username}
                   </h4>
                   <p>{userProfile.bio}</p>
-                  <Link
-                    style={{
-                      float: "right",
-                      color: "#999",
-                      border: "1px solid #999",
-                      padding: ".25rem .5rem",
-                      fontSize: ".875rem",
-                      borderRadius: ".2rem",
-                      backgroundImage: "none",
-                      backgroundColor: "transparent",
-                    }}
-                    className="btn btn-sm btn-outline-secondary action-btn"
-                    to={"/settings"}
-                    previewlistener="true"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="currentColor"
-                      className="bi bi-gear-wide"
-                      viewBox="0 0 16 16"
+                  {authenticatedUsername === username ? (
+                    <Link
+                      style={{
+                        float: "right",
+                        color: "#999",
+                        border: "1px solid #999",
+                        padding: ".25rem .5rem",
+                        fontSize: ".875rem",
+                        borderRadius: ".2rem",
+                        backgroundImage: "none",
+                        backgroundColor: "transparent",
+                      }}
+                      className="setting-btn btn btn-sm btn-outline-secondary action-btn"
+                      to={"/settings"}
                     >
-                      <path d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434zM8 12.997a4.998 4.998 0 1 1 0-9.995 4.998 4.998 0 0 1 0 9.996z" />
-                    </svg>{" "}
-                    Edit Profile Settings
-                  </Link>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className="bi bi-gear-wide"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M8.932.727c-.243-.97-1.62-.97-1.864 0l-.071.286a.96.96 0 0 1-1.622.434l-.205-.211c-.695-.719-1.888-.03-1.613.931l.08.284a.96.96 0 0 1-1.186 1.187l-.284-.081c-.96-.275-1.65.918-.931 1.613l.211.205a.96.96 0 0 1-.434 1.622l-.286.071c-.97.243-.97 1.62 0 1.864l.286.071a.96.96 0 0 1 .434 1.622l-.211.205c-.719.695-.03 1.888.931 1.613l.284-.08a.96.96 0 0 1 1.187 1.187l-.081.283c-.275.96.918 1.65 1.613.931l.205-.211a.96.96 0 0 1 1.622.434l.071.286c.243.97 1.62.97 1.864 0l.071-.286a.96.96 0 0 1 1.622-.434l.205.211c.695.719 1.888.03 1.613-.931l-.08-.284a.96.96 0 0 1 1.187-1.187l.283.081c.96.275 1.65-.918.931-1.613l-.211-.205a.96.96 0 0 1 .434-1.622l.286-.071c.97-.243.97-1.62 0-1.864l-.286-.071a.96.96 0 0 1-.434-1.622l.211-.205c.719-.695.03-1.888-.931-1.613l-.284.08a.96.96 0 0 1-1.187-1.186l.081-.284c.275-.96-.918-1.65-1.613-.931l-.205.211a.96.96 0 0 1-1.622-.434zM8 12.997a4.998 4.998 0 1 1 0-9.995 4.998 4.998 0 0 1 0 9.996z" />
+                      </svg>{" "}
+                      Edit Profile Settings
+                    </Link>
+                  ) : (
+                    <button
+                      style={{
+                        float: "right",
+                        color: "#999",
+                        border: "1px solid #999",
+                        padding: ".25rem .5rem",
+                        fontSize: ".875rem",
+                        borderRadius: ".2rem",
+                        backgroundImage: "none",
+                        backgroundColor: "transparent",
+                      }}
+                      className="setting-btn btn btn-sm action-btn btn-outline-secondary"
+                      onClick={handleToggleFollow}
+                    >
+                      {isFollowing ? "- Unfollow" : "+ Follow"}{" "}
+                      {userProfile.username}
+                    </button>
+                  )}
                 </div>
               </div>
             </Container>
@@ -273,15 +376,16 @@ const UserProfile = () => {
                           </span>
                         </div>
                         <button
-                          className="btn btn-sm btn-outline-primary pull-xs-right"
+                          className="heart-btn btn btn-sm btn-outline-primary pull-xs-right"
                           style={{
                             float: "right",
                             padding: ".25rem .5rem",
                             fontSize: ".875rem",
                             borderRadius: "0.2rem",
-                            color: "#5cb85c",
-                            backgroundImage: "none",
-                            backgroundColor: "transparent",
+                            color: article.favorited ? "#fff" : "#5cb85c",
+                            backgroundColor: article.favorited
+                              ? "#5cb85c"
+                              : "transparent",
                             borderColor: "#5cb85c",
                             display: "inline-block",
                             fontWeight: "400",
@@ -293,18 +397,33 @@ const UserProfile = () => {
                             userSelect: "none",
                             border: "1px solid #5cb85c",
                           }}
+                          onClick={() =>
+                            handleToggleFavorite(
+                              article.slug,
+                              article.favorited
+                            )
+                          }
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
                             height="16"
-                            fill="currentColor"
+                            fill={article.favorited ? "#fff" : "currentColor"}
                             className="bi bi-suit-heart-fill"
                             viewBox="0 0 16 16"
                           >
                             <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1" />
                           </svg>{" "}
-                          {article.favoritesCount}
+                          <span
+                            className="favorites-count"
+                            style={{
+                              color: article.favorited
+                                ? "#fff"
+                                : "currentColor",
+                            }}
+                          >
+                            {article.favoritesCount}
+                          </span>
                         </button>
                       </div>
                       <Link
@@ -394,7 +513,9 @@ const UserProfile = () => {
                     </div>
                   ))
                 ) : (
-                  <div className="text-center">No articles are here... yet.</div>
+                  <div className="text-center">
+                    No articles are here... yet.
+                  </div>
                 )}
               </div>
             </div>
