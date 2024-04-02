@@ -1,7 +1,7 @@
 import React from "react";
 import API from "../api/API";
 
-const ArticleList = ({ articleList, setArticleList }) => {
+const ArticleList = ({ articleList, setArticleList ,selectedTags}) => {
   const handleClickLikeBtn = (slug, isLiked) => {
     if (localStorage.getItem("auth-token")) {
       API.toggleLikeArticle(slug, isLiked).then((data) => {
@@ -22,6 +22,7 @@ const ArticleList = ({ articleList, setArticleList }) => {
 
   return (
     <div>
+
       {(!articleList && <div>Loading...</div>) ||
         (articleList.length === 0 && <div>There is no article yet</div>) ||
         (articleList.length > 0 &&

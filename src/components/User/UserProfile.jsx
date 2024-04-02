@@ -89,6 +89,7 @@ const UserProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+   
     const fetchProfile = async () => {
       try {
         const profileData = await getUserProfileByUsername(username);
@@ -97,7 +98,7 @@ const UserProfile = () => {
         console.error("Error fetching user profile:", error);
       }
     };
-
+  
     const fetchUserArticles = async () => {
       try {
         const articlesData = await getUserArticlesByUsername(username);
@@ -108,9 +109,10 @@ const UserProfile = () => {
         setIsLoading(false);
       }
     };
-
+    
     fetchProfile();
     fetchUserArticles();
+    
   }, [username]);
 
   const handleToggleFavorite = async (slug, isFavorited) => {
