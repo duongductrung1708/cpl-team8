@@ -98,6 +98,7 @@ const Setting = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("auth-token");
+    localStorage.removeItem("auth-username");
     navigate("/signin");
     window.location.reload();
   };
