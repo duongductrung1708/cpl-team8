@@ -12,6 +12,15 @@ API.getArticles = async (page, limit) => {
   }
 };
 
+API.getTags = async () => {
+  try {
+    const res = await axios.get(BASE_URL + `/tags`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 API.getArticlesByUsername = async (username) => {
   try {
     const res = await axios.get(BASE_URL + `/articles/?author=${username}`);

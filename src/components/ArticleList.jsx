@@ -1,8 +1,20 @@
 import React from "react";
 
-const ArticleList = ({ articleList }) => {
+const ArticleList = ({ articleList,selectedTags }) => {
   return (
     <div>
+            <div className="border-bottom">
+            <ul className="nav">
+            <li className={`nav-item py-2 px-3 ${selectedTags ? "" : "active"}`} style={{ color: selectedTags ? "#aaa" : "rgb(92, 184, 92)" }}>
+            Global Feed
+          </li>
+          {selectedTags && (
+            <li className="nav-item py-2 px-3 active" style={{ color: "rgb(92, 184, 92)" }}>
+              #{selectedTags}
+            </li>
+          )}
+        </ul>
+        </div>
       {(!articleList && <div>Loading...</div>) ||
         (articleList.articles.length === 0 && (
           <div>There is no article yet</div>
