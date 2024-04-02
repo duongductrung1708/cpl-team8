@@ -305,3 +305,12 @@
   opacity: .6;
   cursor: pointer;
 }
+
+.signinup a{
+  color: #5cb85c;
+}
+
+.signinup a:hover{
+  text-decoration: underline;
+}
+
