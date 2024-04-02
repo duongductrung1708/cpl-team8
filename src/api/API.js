@@ -20,6 +20,16 @@ API.getArticles = async (page, limit, token) => {
   }
 };
 
+
+API.getTags = async () => {
+  try {
+    const res = await axios.get(BASE_URL + `/tags`);
+    return res.data;
+      } catch (error) {
+    console.log(error);
+  }
+};
+
 API.toggleLikeArticle = async (slug, isLiked) => {
   try {
     if (localStorage.getItem("auth-token")) {
@@ -31,10 +41,9 @@ API.toggleLikeArticle = async (slug, isLiked) => {
       };
       const res = await axios(BASE_URL + `/articles/${slug}/favorite`, config);
       return res.data;
+    }} catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
+  };
 
 export default API;

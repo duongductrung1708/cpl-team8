@@ -22,7 +22,7 @@ const Footer = () => {
     marginTop: "3rem",
     padding: "1rem 0",
     position: hasContent ? "relative" : "absolute",
-    bottom: hasContent ? "" : "0",
+    bottom: hasContent ? "" : "",
     width: "100%",
   };
 

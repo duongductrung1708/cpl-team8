@@ -3,15 +3,27 @@ import { Container } from "react-bootstrap";
 import Footer from "./Footer";
 import API from "../api/API.js";
 import ArticleList from "./ArticleList.jsx";
+import Sidebar from "./Sidebar.jsx";
 
 const HomePage = () => {
   const [articlesGlobal, setArticleGlobal] = useState(null);
+  const [tags, setTags] = useState(null);
+  const [selectedTags, setSelectedTags] = useState(null);
 
   useEffect(() => {
     API.getArticles(1, 10, localStorage.getItem("auth-token")).then((data) => {
       setArticleGlobal(data);
     });
+    API.getTags().then((data) => {
+      setTags(data);
+    });
   }, []);
+
+  const handleTagClick = (tag) => {
+    setSelectedTags(tag);
+  };
+
+  console.log(selectedTags);
 
   return (
     <div>
@@ -47,18 +59,38 @@ const HomePage = () => {
           </p>
         </Container>
       </div>
-      <Container>
-        <div className="border-bottom">
-          <ul className="nav">
-            <li
-              className="nav-item py-2 px-3 active"
-              style={{ color: "rgb(92, 184, 92)" }}
-            >
-              Global Feed
-            </li>
-          </ul>
+      <Container >
+         <div className="row">
+         <div className="col-md-9">
+          <div className="border-bottom">
+            <ul className="nav">
+              <li
+                className={`nav-item py-2 px-3 ${selectedTags ? "" : "active"}`}
+                style={{ color: selectedTags ? "#aaa" : "rgb(92, 184, 92)" }}
+              >
+                Global Feed
+              </li>
+              {selectedTags && (
+                <li
+                  className="nav-item py-2 px-3 active"
+                  style={{ color: "rgb(92, 184, 92)" }}
+                >
+                  #{selectedTags}
+                </li>
+              )}
+            </ul>
+          </div>
+          <ArticleList
+            articleList={articlesGlobal && articlesGlobal.articles}
+            setArticleList={setArticleGlobal}
+            selectedTags={selectedTags}
+          />
         </div>
-        <ArticleList articleList={articlesGlobal && articlesGlobal.articles} setArticleList={setArticleGlobal} />
+
+        <div className="col-md-3">
+          <Sidebar tagList={tags} handleTagClick={handleTagClick} />
+        </div>
+         </div>
       </Container>
       <Footer />
     </div>
