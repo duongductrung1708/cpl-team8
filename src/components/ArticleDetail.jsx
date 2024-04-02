@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom"; // Import Link
 import "./css/articledetailstyle.css";
 import Footer from "./Footer";
+import { Container } from "react-bootstrap";
 
 const ArticleDetail = () => {
   const { slug } = useParams();
@@ -107,63 +108,65 @@ const ArticleDetail = () => {
       {article && !loading && (
         <div>
           <div className="banner" style={{paddingRight:"120px", paddingLeft:"120px"}}>
-            <h1>{article.title}</h1>
-            <div className="article-meta">
-              <img src={article.author.image} alt="author avatar" />
-              <div className="info">
-                <Link
-                  className="author"
-                  to={`/profile/${article.author.username}`} // Use Link instead of href
+            <Container>
+              <h1>{article.title}</h1>
+              <div className="article-meta">
+                <img src={article.author.image} alt="author avatar" />
+                <div className="info">
+                  <Link
+                    className="author"
+                    to={`/profile/${article.author.username}`} // Use Link instead of href
+                  >
+                    {article.author.username}
+                  </Link>
+                  <span className="date">{formatDate(article.createdAt)}</span>
+                </div>
+                <button
+                  className="btn btn-sm action-btn btn-outline-secondary"
+                  onClick={toggleFollow}
+                  disabled={isFollowingLoading}
                 >
-                  {article.author.username}
-                </Link>
-                <span className="date">{formatDate(article.createdAt)}</span>
+                  <i className="ion-plus-round"></i>{" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-plus-lg"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+                    />
+                  </svg>
+                  {isFollowing ? "Unfollow" : "Follow"} {article.author.username}
+                </button>{" "}
+                &nbsp;
+                <button
+                  className="btn btn-sm btn-outline-primary"
+                  onClick={toggleFavorite}
+                  disabled={isFavoritedLoading}
+                >
+                  <i className="ion-heart"></i>{" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-heart-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+                    />
+                  </svg>{" "}
+                  {isFavorited ? "Unfavorite Article" : "Favorite Article"}
+                  <span className="counter">({article.favoritesCount})</span>
+                </button>
               </div>
-              <button
-                className="btn btn-sm action-btn btn-outline-secondary"
-                onClick={toggleFollow}
-                disabled={isFollowingLoading}
-              >
-                <i className="ion-plus-round"></i>{" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
-                  />
-                </svg>
-                {isFollowing ? "Unfollow" : "Follow"} {article.author.username}
-              </button>{" "}
-              &nbsp;
-              <button
-                className="btn btn-sm btn-outline-primary"
-                onClick={toggleFavorite}
-                disabled={isFavoritedLoading}
-              >
-                <i className="ion-heart"></i>{" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-heart-fill"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
-                  />
-                </svg>{" "}
-                {isFavorited ? "Unfavorite Article" : "Favorite Article"}
-                <span className="counter">({article.favoritesCount})</span>
-              </button>
-            </div>
+            </Container>
           </div>
           <div className="container page">
             <div className="row article-content">
