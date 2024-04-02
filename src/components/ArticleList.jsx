@@ -1,20 +1,17 @@
 import React from "react";
 import API from "../api/API";
 
-const ArticleList = ({ articleList, setArticleList ,selectedTags}) => {
+const ArticleList = ({ articleList, setArticleList }) => {
   const handleClickLikeBtn = (slug, isLiked) => {
     if (localStorage.getItem("auth-token")) {
       API.toggleLikeArticle(slug, isLiked).then((data) => {
         setArticleList((prevArticles) => {
-          const index = prevArticles.articles.findIndex(
+          const index = prevArticles.findIndex(
             (article) => article.slug === slug
           );
-          const updatedArticles = [...prevArticles.articles];
+          const updatedArticles = [...prevArticles];
           updatedArticles[index] = data.article;
-          return {
-            articles: updatedArticles,
-            articlesCount: updatedArticles.length,
-          };
+          return updatedArticles;
         });
       });
     }
