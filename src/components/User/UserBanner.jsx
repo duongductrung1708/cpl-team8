@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Link, NavLink, useLocation, useParams } from "react-router-dom";
-import Footer from "../Footer";
 import "../css/styles.css";
 
 const getUserProfileByUsername = async (username) => {
@@ -180,9 +179,11 @@ const UserBanner = () => {
                   >
                     <li className="nav-item" style={{ float: "left" }}>
                       <NavLink
-                        className={location.pathname === `/profile/${username}`
-                        ? "nav-link active"
-                        : "nav-link"}
+                        className={
+                          location.pathname === `/profile/${username}`
+                            ? "nav-link active"
+                            : "nav-link deactive"
+                        }
                         to={`/profile/${username}`}
                         style={{
                           borderRadius: "0",
@@ -191,6 +192,8 @@ const UserBanner = () => {
                           background: "0 0",
                           color: "#aaa",
                           textDecoration: "none",
+                          display: "block",
+                          padding: ".5em 1em",
                         }}
                       >
                         My Articles
@@ -201,9 +204,11 @@ const UserBanner = () => {
                       style={{ marginLeft: ".2rem", float: "left" }}
                     >
                       <NavLink
-                        className={location.pathname === `/profile/${username}/favorites`
-                        ? "nav-link active"
-                        : "nav-link"}
+                        className={
+                          location.pathname === `/profile/${username}/favorites`
+                            ? "nav-link active"
+                            : "nav-link"
+                        }
                         to={`/profile/${username}/favorites`}
                         style={{
                           borderRadius: "0",
@@ -224,7 +229,6 @@ const UserBanner = () => {
           </Container>
         </>
       )}
-      <Footer />
     </div>
   );
 };

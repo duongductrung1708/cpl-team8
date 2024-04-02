@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import Footer from "../Footer";
+import { useNavigate } from "react-router-dom";
 
 const CreateArticle = () => {
+  const nav = useNavigate();
   const [formData, setFormData] = useState({
     articleTitle: "",
     description: "",
@@ -40,6 +42,7 @@ const CreateArticle = () => {
   
       const createdArticle = await response.json();
       console.log("Article created:", createdArticle);
+      nav("/article/Ill-quantify-the-redundant-TCP-bus-that-should-hard-drive-the-ADP-bandwidth!-553 ");
   
       setFormData({
         articleTitle: "",
