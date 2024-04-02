@@ -33,6 +33,7 @@ const SignIn = () => {
 
       if (response.ok) {
         localStorage.setItem("auth-token", responseData.user.token);
+        localStorage.setItem("auth-username", responseData.user.username);
         window.location.replace("/home");
       } else {
         if (responseData.errors) {
