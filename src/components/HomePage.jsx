@@ -8,7 +8,7 @@ const HomePage = () => {
   const [articlesGlobal, setArticleGlobal] = useState(null);
 
   useEffect(() => {
-    API.getArticles(1, 10).then((data) => {
+    API.getArticles(1, 10, localStorage.getItem("auth-token")).then((data) => {
       setArticleGlobal(data);
     });
   }, []);
@@ -58,7 +58,7 @@ const HomePage = () => {
             </li>
           </ul>
         </div>
-        <ArticleList articleList={articlesGlobal} />
+        <ArticleList articleList={articlesGlobal && articlesGlobal.articles} setArticleList={setArticleGlobal} />
       </Container>
       <Footer />
     </div>

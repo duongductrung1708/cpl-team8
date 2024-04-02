@@ -1,0 +1,21 @@
+.heart-btn:hover {
+  background: green !important;
+}
+
+.heart-btn:active {
+  background: rgb(0, 103, 0) !important;
+}
+
+.setting-btn:hover {
+  background: #d0d0d0 !important;
+}
+
+.setting-btn:active {
+  background: #b9b9b9 !important;
+}
+
+.nav-link.active {
+  background: #fff !important;
+  border-bottom: 2px solid #5cb85c !important;
+  color: #5cb85c !important;
+}
