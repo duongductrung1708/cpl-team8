@@ -82,44 +82,13 @@ const toggleFavoriteArticle = async (slug, isFavorited) => {
   }
 };
 
-const followUser = async (username, isFollowing) => {
-  try {
-    const method = isFollowing ? "DELETE" : "POST";
-    const response = await fetch(
-      `https://api.realworld.io/api/profiles/${username}/follow`,
-      {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${localStorage.getItem("auth-token")}`,
-        },
-      }
-    );
-
-    if (!response.ok) {
-      throw new Error("Failed to toggle follow status");
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error("Error toggling follow status:", error);
-    throw error;
-  }
-};
-
 const UserProfile = () => {
   const { username } = useParams();
   const [userProfile, setUserProfile] = useState(null);
   const [userArticles, setUserArticles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [authenticatedUsername, setAuthenticatedUsername] = useState("");
-  const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
-    const authUsername = localStorage.getItem("auth-username");
-    console.log("Authenticated Username from Local Storage:", authUsername);
-    setAuthenticatedUsername(authUsername);
-
     const fetchProfile = async () => {
       try {
         const profileData = await getUserProfileByUsername(username);
@@ -157,15 +126,6 @@ const UserProfile = () => {
       });
     } catch (error) {
       console.error("Error toggling favorite:", error);
-    }
-  };
-
-  const handleToggleFollow = async () => {
-    try {
-      const updatedProfile = await followUser(username, isFollowing);
-      setIsFollowing(updatedProfile.profile.following);
-    } catch (error) {
-      console.error("Error toggling follow:", error);
     }
   };
 
