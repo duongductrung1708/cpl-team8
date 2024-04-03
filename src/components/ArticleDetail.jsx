@@ -20,6 +20,7 @@ const ArticleDetail = () => {
   const [postingComment, setPostingComment] = useState(false);
   
   const [isAuthor, setIsAuthor] = useState(false);
+  const [userProfileImage, setUserProfileImage] = useState('');
 
   const navigate = useNavigate();
 
@@ -50,6 +51,23 @@ const ArticleDetail = () => {
       }
     };
 
+    const fetchUserProfileImage = async () => {
+      try {
+        const token = localStorage.getItem('auth-token');
+        if (token) {
+          const response = await fetch('https://api.realworld.io/api/user', {
+            headers: {
+              'Authorization': `Token ${token}`
+            }
+          });
+          const userData = await response.json();
+          setUserProfileImage(userData.user.image);
+        }
+      } catch (error) {
+        console.error('Error fetching user profile image:', error);
+      }
+    };
+
     const fetchComments = async () => {
       try {
         const response = await fetch(
@@ -65,6 +83,7 @@ const ArticleDetail = () => {
       }
     };
 
+    fetchUserProfileImage();
     fetchArticle();
     fetchComments();
   }, [slug]);
@@ -386,7 +405,7 @@ const ArticleDetail = () => {
                     </div>
                     <div className="card-footer">
                       <img
-                        src="https://api.realworld.io/images/smiley-cyrus.jpeg"
+                        src={userProfileImage}
                         className="comment-author-img"
                         alt="author avatar"
                       />
