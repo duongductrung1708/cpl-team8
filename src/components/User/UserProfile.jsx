@@ -136,7 +136,7 @@ const UserProfile = () => {
       {userProfile && (
         <>
         <UserBanner />
-          <Container>
+          <Container style={{marginBottom: "100px"}}>
             <div className="row">
               <div className="col-xs-12 col-md-10 offset-md-1">
                 {isLoading && <div>Loading articles...</div>}

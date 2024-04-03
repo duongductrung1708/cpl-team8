@@ -24,6 +24,7 @@ const Footer = () => {
     position: "fixed",
     bottom: hasContent ? "" : "0",
     width: "100%",
+    zIndex: "999",
   };
 
   return (

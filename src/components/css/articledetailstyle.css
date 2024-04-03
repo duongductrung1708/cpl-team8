@@ -314,3 +314,21 @@
   text-decoration: underline;
 }
 
+.signinup{
+  margin-bottom: 100px;
+}
+
+.btn-outline-danger {
+  color: #b85c5c;
+  background-image: none;
+  background-color: transparent;
+  border-color: #b85c5c;
+}
+
+.btn-outline-secondary {
+  color: #ccc;
+  background-image: none;
+  background-color: transparent;
+  border-color: #ccc;
+}
+

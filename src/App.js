@@ -26,7 +26,8 @@ function App() {
           <Route path="/settings" component={Setting} element={<Setting />}/>
           <Route path="/profile/:username" component={UserProfile} element={<UserProfile />}/>
           <Route path="/profile/:username/favorites" component={Favorite} element={<Favorite />}/>
-          <Route path="/editor" component={CreateArticle} element={<CreateArticle />}/>
+          <Route path="/editor/:slug" component={CreateArticle} element={<CreateArticle />}/>
+          <Route path="/editor" exact component={CreateArticle} element={<CreateArticle />}/>
           <Route path="/article/:slug" component={ArticleDetail} element={<ArticleDetail />}/>
         </Routes>
       </div>

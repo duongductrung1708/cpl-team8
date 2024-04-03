@@ -18,6 +18,9 @@ const ArticleDetail = () => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [postingComment, setPostingComment] = useState(false);
+  
+  const [isAuthor, setIsAuthor] = useState(false);
+  const [userProfileImage, setUserProfileImage] = useState('');
 
   const navigate = useNavigate();
 
@@ -37,6 +40,10 @@ const ArticleDetail = () => {
         setArticle(data.article);
         setIsFollowing(data.article.author.following);
         setIsFavorited(data.article.favorited);
+        setIsAuthor(
+          data.article.author.username === localStorage.getItem("auth-username")
+        );
+
         setLoading(false);
       } catch (error) {
         console.error("Error fetching article:", error);
@@ -44,24 +51,72 @@ const ArticleDetail = () => {
       }
     };
 
-    const fetchComments = async () => {
+    const fetchUserProfileImage = async () => {
       try {
-        const response = await fetch(
-          `https://api.realworld.io/api/articles/${slug}/comments`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch comments");
+        const token = localStorage.getItem('auth-token');
+        if (token) {
+          const response = await fetch('https://api.realworld.io/api/user', {
+            headers: {
+              'Authorization': `Token ${token}`
+            }
+          });
+          const userData = await response.json();
+          setUserProfileImage(userData.user.image);
         }
-        const data = await response.json();
-        setComments(data.comments);
+      } catch (error) {
+        console.error('Error fetching user profile image:', error);
+      }
+    };
+
+    const fetchComments = async () => {
+      try { 
+        const cachedComments = JSON.parse(localStorage.getItem(`comments_${slug}`));
+        if (cachedComments) {
+          setComments(cachedComments);
+        } else {
+          const response = await fetch(`https://api.realworld.io/api/articles/${slug}/comments`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch comments");
+          }
+          const data = await response.json();
+          setComments(data.comments); 
+          updateCommentsInStorage(slug, data.comments);
+        }
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
     };
 
+    fetchUserProfileImage();
     fetchArticle();
     fetchComments();
   }, [slug]);
+
+  const handleEditArticle = () => {
+    navigate(`/editor/${slug}`, { state: { article } }); 
+  };
+
+  const handleDeleteArticle = async () => {
+    try {
+      const response = await fetch(
+        `https://api.realworld.io/api/articles/${slug}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Token ${localStorage.getItem("auth-token")}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete article");
+      }
+
+      navigate("/home");
+    } catch (error) {
+      console.error("Error deleting article:", error);
+    }
+  };
 
   const formatDate = (dateString) => {
     const options = { month: "long", day: "numeric", year: "numeric" };
@@ -136,6 +191,10 @@ const ArticleDetail = () => {
     }
   };
 
+  const updateCommentsInStorage = (slug, comments) => {
+    localStorage.setItem(`comments_${slug}`, JSON.stringify(comments));
+  };
+
   const handlePostComment = async (e) => {
     e.preventDefault();
     if (!isLoggedIn) {
@@ -164,8 +223,11 @@ const ArticleDetail = () => {
       }
 
       const newComment = await response.json();
-      setComments([newComment.comment, ...comments]);
-      setCommentText("");
+      const updatedComments = [newComment.comment, ...comments];
+      setComments(updatedComments);
+      setCommentText(""); 
+   
+      updateCommentsInStorage(slug, updatedComments);
     } catch (error) {
       console.error("Error posting comment:", error);
     } finally {
@@ -189,11 +251,14 @@ const ArticleDetail = () => {
         throw new Error("Failed to delete comment");
       }
 
-      setComments(comments.filter((comment) => comment.id !== commentId));
-    } catch (error) {
-      console.error("Error deleting comment:", error);
-    }
-  };
+      const updatedComments = comments.filter((comment) => comment.id !== commentId);
+    setComments(updatedComments);
+ 
+    updateCommentsInStorage(slug, updatedComments);
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+  }
+};
 
   const handleLoginRedirect = () => {
     navigate("/login");
@@ -220,51 +285,96 @@ const ArticleDetail = () => {
                   </Link>
                   <span className="date">{formatDate(article.createdAt)}</span>
                 </div>
-                <button
-                  className="btn btn-sm action-btn btn-outline-secondary"
-                  onClick={toggleFollow}
-                  disabled={!isLoggedIn || isFollowingLoading}
-                >
-                  <i className="ion-plus-round"></i>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-plus-lg"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
-                    />
-                  </svg>
-                  {isFollowing ? "Unfollow" : "Follow"}{" "}
-                  {article.author.username}
-                </button>{" "}
-                &nbsp;
-                <button
-                  className="btn btn-sm btn-outline-primary"
-                  onClick={toggleFavorite}
-                  disabled={!isLoggedIn || isFavoritedLoading}
-                >
-                  <i className="ion-heart"></i>{" "}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-heart-fill"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
-                    />
-                  </svg>{" "}
-                  {isFavorited ? "Unfavorite Article" : "Favorite Article"}
-                  <span className="counter">({article.favoritesCount})</span>
-                </button>
+                {isLoggedIn && isAuthor ? (
+                  <>
+                    <button
+                      className="btn btn-outline-secondary btn-sm"
+                      onClick={handleEditArticle}
+                    >
+                      <i className="ion-edit"></i>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className ="bi bi-pencil-fill"
+                        viewBox="0 0 16 16"
+                        style={{ marginRight: "3px" }}
+                      >
+                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
+                      </svg>
+                      Edit Article
+                    </button>
+                    &nbsp;
+                    <button
+                      className="btn btn-outline-danger btn-sm"
+                      onClick={handleDeleteArticle}
+                    >
+                      <i className="ion-trash-a"></i>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className ="bi bi-trash3-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                      </svg>
+                      Delete Article
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="btn btn-sm action-btn btn-outline-secondary"
+                      onClick={toggleFollow}
+                      disabled={!isLoggedIn || isFollowingLoading}
+                    >
+                      <i className="ion-plus-round"></i>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className ="bi bi-plus-lg"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+                        />
+                      </svg>
+                      {isFollowing ? "Unfollow" : "Follow"}{" "}
+                      {article.author.username}
+                    </button>{" "}
+                    &nbsp;
+                    <button
+                      className="btn btn-sm btn-outline-primary"
+                      onClick={toggleFavorite}
+                      disabled={!isLoggedIn || isFavoritedLoading}
+                    >
+                      <i className="ion-heart"></i>{" "}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        className="bi bi-heart-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+                        />
+                      </svg>{" "}
+                      {isFavorited ? "Unfavorite Article" : "Favorite Article"}
+                      <span className="counter">
+                        ({article.favoritesCount})
+                      </span>
+                    </button>
+                  </>
+                )}
               </div>
             </Container>
           </div>
@@ -288,7 +398,10 @@ const ArticleDetail = () => {
             </div>
             <hr />
             <div className="row">
-              <div className="than col-xs-12 col-md-8 offset-md-2">
+              <div
+                className="than col-xs-12 col-md-8 offset-md-2"
+                style={{ marginBottom: "100px" }}
+              >
                 {isLoggedIn ? (
                   <form
                     className="card comment-form"
@@ -306,7 +419,7 @@ const ArticleDetail = () => {
                     </div>
                     <div className="card-footer">
                       <img
-                        src="https://api.realworld.io/images/smiley-cyrus.jpeg"
+                        src={userProfileImage}
                         className="comment-author-img"
                         alt="author avatar"
                       />
