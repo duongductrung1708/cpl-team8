@@ -1,5 +1,14 @@
+.nav-item {
+  color: #aaa;
+}
+
+.nav-item:hover {
+  cursor: pointer;
+}
+
 .nav-item.active {
   border-bottom: 2px solid rgb(92, 184, 92);
+  color: rgb(92, 184, 92);
 }
 
 .article-preview {
