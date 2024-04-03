@@ -1,4 +1,5 @@
 import React from 'react';
+import "./css/styles.css";
 
 const Sidebar = ({ tagList, handleTagClick }) => {
   return (
@@ -10,7 +11,7 @@ const Sidebar = ({ tagList, handleTagClick }) => {
         ) : (
           tagList.tags.map((tag, index) => (
             // eslint-disable-next-line jsx-a11y/anchor-is-valid
-            <a key={index} href="#" className="tag-pill tag-default" style={{ textDecoration: 'none' }} onClick={() => handleTagClick(tag)}>
+            <a key={index} href="#" className="tag-pill tag-default sidebar-tag" style={{ textDecoration: 'none' }} onClick={() => handleTagClick(tag)}>
               {tag}
             </a>
           ))

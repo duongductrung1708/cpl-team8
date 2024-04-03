@@ -39,3 +39,7 @@
 .navhover:hover {
   color: rgb(79, 78, 78) !important;
 }
+
+.tag-pill.tag-default.sidebar-tag:hover{
+  background-color: #757575 !important;
+}

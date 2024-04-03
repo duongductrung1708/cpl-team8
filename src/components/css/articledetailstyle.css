@@ -333,10 +333,9 @@ form {
   color: #333;
 }
 
-.btn-outline-primary:active {
-  color: #fff;
-  background-color: #6ec06e ;
-  border-color: #6ec06e;
+.btn-outline-primary {
+  color: #fff !important;
+  background-color: #6ec06e !important;
+  border-color: #6ec06e !important;
+  --bs-btn-active-bg: #6ec06e !important;
 }
-
-
