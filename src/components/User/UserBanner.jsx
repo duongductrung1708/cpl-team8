@@ -207,7 +207,7 @@ const UserBanner = () => {
                         className={
                           location.pathname === `/profile/${username}/favorites`
                             ? "nav-link active"
-                            : "nav-link"
+                            : "nav-link deactive"
                         }
                         to={`/profile/${username}/favorites`}
                         style={{
