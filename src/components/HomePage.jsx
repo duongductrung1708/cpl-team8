@@ -120,7 +120,7 @@ const HomePage = () => {
                   <a
                     style={{ float: "left", cursor: "pointer" }}
                     className="page-link"
-                    href="true"
+                    href 
                     onClick={() => handlePageChange(page + 1)}
                   >
                     {page + 1}
