@@ -69,8 +69,7 @@ const ArticleDetail = () => {
     };
 
     const fetchComments = async () => {
-      try {
-        // Check if comments are stored in localStorage for the current article
+      try { 
         const cachedComments = JSON.parse(localStorage.getItem(`comments_${slug}`));
         if (cachedComments) {
           setComments(cachedComments);
@@ -80,8 +79,7 @@ const ArticleDetail = () => {
             throw new Error("Failed to fetch comments");
           }
           const data = await response.json();
-          setComments(data.comments);
-          // Store comments in localStorage for the current article
+          setComments(data.comments); 
           updateCommentsInStorage(slug, data.comments);
         }
       } catch (error) {
@@ -95,7 +93,7 @@ const ArticleDetail = () => {
   }, [slug]);
 
   const handleEditArticle = () => {
-    navigate(`/editor/${slug}`, { state: { article } }); // Pass the article data to CreateArticle
+    navigate(`/editor/${slug}`, { state: { article } }); 
   };
 
   const handleDeleteArticle = async () => {
@@ -227,9 +225,8 @@ const ArticleDetail = () => {
       const newComment = await response.json();
       const updatedComments = [newComment.comment, ...comments];
       setComments(updatedComments);
-      setCommentText(""); // Clear the textarea
-  
-      // Update comments in localStorage
+      setCommentText(""); 
+   
       updateCommentsInStorage(slug, updatedComments);
     } catch (error) {
       console.error("Error posting comment:", error);
@@ -256,8 +253,7 @@ const ArticleDetail = () => {
 
       const updatedComments = comments.filter((comment) => comment.id !== commentId);
     setComments(updatedComments);
-
-    // Update comments in localStorage
+ 
     updateCommentsInStorage(slug, updatedComments);
   } catch (error) {
     console.error("Error deleting comment:", error);
