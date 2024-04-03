@@ -131,6 +131,10 @@ const ArticleDetail = () => {
 
     try {
       setIsFollowingLoading(true);
+      const followButton = document.querySelector(".btn-outline-secondary");
+
+      // Toggle the 'active' class on the button
+      followButton.classList.toggle("active");
 
       const method = isFollowing ? "DELETE" : "POST";
       const response = await fetch(
@@ -164,6 +168,10 @@ const ArticleDetail = () => {
 
     try {
       setIsFavoritedLoading(true);
+      const favoriteButton = document.querySelector(".btn-outline-primary");
+
+      // Toggle the 'active' class on the button
+      favoriteButton.classList.toggle("active");
 
       const method = isFavorited ? "DELETE" : "POST";
       const response = await fetch(
@@ -190,6 +198,7 @@ const ArticleDetail = () => {
       setIsFavoritedLoading(false);
     }
   };
+
 
   const updateCommentsInStorage = (slug, comments) => {
     localStorage.setItem(`comments_${slug}`, JSON.stringify(comments));

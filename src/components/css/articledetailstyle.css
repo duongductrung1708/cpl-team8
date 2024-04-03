@@ -327,3 +327,16 @@ form {
 .btn-outline-secondary:hover {
   background-color: #c8c8c8;
 }
+
+.btn-outline-secondary:active {
+  background-color: #c8c8c8;
+  color: #333;
+}
+
+.btn-outline-primary:active {
+  color: #fff;
+  background-color: #6ec06e ;
+  border-color: #6ec06e;
+}
+
+
