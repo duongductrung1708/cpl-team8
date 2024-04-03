@@ -31,7 +31,7 @@ const ArticleList = ({ articleList, setArticleList }) => {
                     <div className="d-flex gap-2 ">
                       <a
                         className="d-flex flex-column justify-content-center avatar"
-                        href="/profile/Maksim Esteban"
+                        href={`/profile/${a.author.username}`}
                       >
                         <img
                           decoding="sync"
@@ -40,7 +40,7 @@ const ArticleList = ({ articleList, setArticleList }) => {
                         />
                       </a>
                       <div className="info d-flex flex-column ">
-                        <a className="author" href="/profile/Maksim Esteban">
+                        <a className="author" href={`/profile/${a.author.username}`}>
                           {a.author.username}
                         </a>
                         <span className="date">January 4, 2024</span>
@@ -58,7 +58,7 @@ const ArticleList = ({ articleList, setArticleList }) => {
                   </div>
                   <a
                     className="preview-link"
-                    href="/article/Ill-quantify-the-redundant-TCP-bus-that-should-hard-drive-the-ADP-bandwidth!-553"
+                    href={`/article/${a.slug}`}
                   >
                     <h1>{a.title}</h1>
                     <p>{a.description}</p>

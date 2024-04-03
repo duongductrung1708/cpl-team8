@@ -16,70 +16,74 @@ const HomePage = () => {
   );
 
   useEffect(() => {
-    if (currTag === "yourfeed") {
-      API.getArticlesOfFollowed(1, 10, localStorage.getItem("auth-token")).then(
-        (data) => setArticles(data.articles)
-      );
-    } else if (currTag === "globalfeed") {
-      API.getArticles(1, 10, localStorage.getItem("auth-token")).then(
-        (data) => {
-          setArticles(data.articles);
-        }
-      );
-    }
+    fetchData(currentPage, currTag);
+
     API.getTags().then((data) => {
       setTags(data);
     });
-    fetchData(currentPage);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchData = (page) => {
-    API.getArticles(page, 10, localStorage.getItem("auth-token")).then(
-      (data) => {
-        setArticles(data);
+  const fetchData = (page, currTag, tag) => {
+    if (currTag === "yourfeed") {
+      API.getArticlesOfFollowed(
+        page,
+        10,
+        localStorage.getItem("auth-token")
+      ).then((data) => {
+        setArticles(data.articles);
         setTotalPages(Math.ceil(data.articlesCount / 10));
-      }
-    );
+      });
+    } else if (currTag === "globalfeed") {
+      API.getArticles(page, 10, localStorage.getItem("auth-token")).then(
+        (data) => {
+          setArticles(data.articles);
+          setTotalPages(Math.ceil(data.articlesCount / 10));
+        }
+      );
+    } else if (currTag === "filterfeed") {
+      API.getArticlesByTag(
+        page,
+        10,
+        localStorage.getItem("auth-token"),
+        tag ? tag : selectedTags
+      ).then((data) => {
+        console.log(data);
+        setArticles(data.articles);
+        setTotalPages(Math.ceil(data.articlesCount / 10));
+      });
+    }
   };
 
   const handleClickYourFeedTag = () => {
     setCurrTag("yourfeed");
     setArticles(null);
-    API.getArticlesOfFollowed(1, 10, localStorage.getItem("auth-token")).then(
-      (data) => setArticles(data.articles)
-    );
+    fetchData(1, "yourfeed");
   };
 
   const handleClickGlobalFeedTag = () => {
     setCurrTag("globalfeed");
     setArticles(null);
-    API.getArticles(1, 10, localStorage.getItem("auth-token")).then((data) =>
-      setArticles(data.articles)
-    );
+    fetchData(1, "globalfeed");
   };
 
   const handleClickFilterFeedTag = () => {
     setCurrTag("filterfeed");
     setArticles(null);
-    API.getArticlesByTag(
-      1,
-      10,
-      localStorage.getItem("auth-token"),
-      selectedTags
-    ).then((data) => setArticles(data.articles));
+    fetchData(1, "filterfeed");
   };
 
   const handleTagClick = (tag) => {
     setSelectedTags(tag);
-    setCurrentPage(1); 
-    fetchData(1);
+    fetchData(1, "filterfeed", tag);
+    setCurrTag("filterfeed");
+    setCurrentPage(1);
   };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    fetchData(page);
+    fetchData(page, currTag);
   };
 
   return (
@@ -117,7 +121,7 @@ const HomePage = () => {
         </Container>
       </div>
       <Container>
-      <div className="row">
+        <div className="row">
           <div className="col-md-9">
             <div className="border-bottom">
               <ul className="nav">
@@ -174,7 +178,7 @@ const HomePage = () => {
                   <a
                     style={{ float: "left", cursor: "pointer" }}
                     className="page-link"
-                    href 
+                    href
                     onClick={() => handlePageChange(page + 1)}
                   >
                     {page + 1}
