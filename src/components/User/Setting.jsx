@@ -52,7 +52,7 @@ const updateUserProfile = async (userData) => {
 
 const Setting = () => {
   const [formData, setFormData] = useState({
-    email: "",
+    email: "",  
     password: "",
     username: "",
     bio: "",
@@ -65,12 +65,13 @@ const Setting = () => {
     const fetchUserProfile = async () => {
       try {
         const user = await getUserProfile();
-        setFormData({
-          email: user.email,
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          email: user.email, 
           username: user.username,
           bio: user.bio || "",
           image: user.image || "",
-        });
+        }));
       } catch (error) {
         console.error("Error fetching user profile:", error);
         navigate("/signin");
@@ -185,8 +186,7 @@ const Setting = () => {
                       type="text"
                       placeholder="Email"
                       name="email"
-                      value={formData.email}
-                      onChange={handleChange}
+                      value={formData.email} 
                       style={{
                         padding: ".75rem 1.5rem",
                         fontSize: "1.25rem",
