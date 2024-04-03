@@ -269,8 +269,7 @@ const ArticleDetail = () => {
       {article && !loading && (
         <div>
           <div
-            className="banner"
-            style={{ paddingRight: "120px", paddingLeft: "120px" }}
+            className="banner" 
           >
             <Container>
               <h1>{article.title}</h1>
