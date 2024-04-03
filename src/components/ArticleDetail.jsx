@@ -70,14 +70,20 @@ const ArticleDetail = () => {
 
     const fetchComments = async () => {
       try {
-        const response = await fetch(
-          `https://api.realworld.io/api/articles/${slug}/comments`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch comments");
+        // Check if comments are stored in localStorage for the current article
+        const cachedComments = JSON.parse(localStorage.getItem(`comments_${slug}`));
+        if (cachedComments) {
+          setComments(cachedComments);
+        } else {
+          const response = await fetch(`https://api.realworld.io/api/articles/${slug}/comments`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch comments");
+          }
+          const data = await response.json();
+          setComments(data.comments);
+          // Store comments in localStorage for the current article
+          updateCommentsInStorage(slug, data.comments);
         }
-        const data = await response.json();
-        setComments(data.comments);
       } catch (error) {
         console.error("Error fetching comments:", error);
       }
@@ -187,6 +193,10 @@ const ArticleDetail = () => {
     }
   };
 
+  const updateCommentsInStorage = (slug, comments) => {
+    localStorage.setItem(`comments_${slug}`, JSON.stringify(comments));
+  };
+
   const handlePostComment = async (e) => {
     e.preventDefault();
     if (!isLoggedIn) {
@@ -215,8 +225,12 @@ const ArticleDetail = () => {
       }
 
       const newComment = await response.json();
-      setComments([newComment.comment, ...comments]);
-      setCommentText("");
+      const updatedComments = [newComment.comment, ...comments];
+      setComments(updatedComments);
+      setCommentText(""); // Clear the textarea
+  
+      // Update comments in localStorage
+      updateCommentsInStorage(slug, updatedComments);
     } catch (error) {
       console.error("Error posting comment:", error);
     } finally {
@@ -240,11 +254,15 @@ const ArticleDetail = () => {
         throw new Error("Failed to delete comment");
       }
 
-      setComments(comments.filter((comment) => comment.id !== commentId));
-    } catch (error) {
-      console.error("Error deleting comment:", error);
-    }
-  };
+      const updatedComments = comments.filter((comment) => comment.id !== commentId);
+    setComments(updatedComments);
+
+    // Update comments in localStorage
+    updateCommentsInStorage(slug, updatedComments);
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+  }
+};
 
   const handleLoginRedirect = () => {
     navigate("/login");
