@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
+import './css/styles.css';
 
 const getUserInfo = async () => {
   try {
@@ -70,7 +71,9 @@ const Header = () => {
                   as={Link}
                   to="/home"
                   className={
-                    location.pathname === "/home" ? "text-black" : "text-secondary"
+                    location.pathname === "/home"
+                      ? "text-black"
+                      : "text-secondary navhover"
                   }
                 >
                   Home
@@ -83,7 +86,7 @@ const Header = () => {
                       className={
                         location.pathname === "/signin"
                           ? "text-black"
-                          : "text-secondary"
+                          : "text-secondary navhover"
                       }
                     >
                       Sign in
@@ -94,7 +97,7 @@ const Header = () => {
                       className={
                         location.pathname === "/signup"
                           ? "text-black"
-                          : "text-secondary"
+                          : "text-secondary navhover"
                       }
                     >
                       Sign up
@@ -110,7 +113,7 @@ const Header = () => {
                     className={
                       location.pathname === "/editor"
                         ? "text-black"
-                        : "text-secondary"
+                        : "text-secondary navhover"
                     }
                   >
                     <svg
@@ -135,7 +138,7 @@ const Header = () => {
                     className={
                       location.pathname === "/settings"
                         ? "text-black"
-                        : "text-secondary"
+                        : "text-secondary navhover"
                     }
                   >
                     <svg
@@ -155,9 +158,10 @@ const Header = () => {
                       as={Link}
                       to={`/profile/${username}`}
                       className={
-                        location.pathname === `/profile/${username}`
+                        location.pathname === `/profile/${username}` ||
+                        location.pathname === `/profile/${username}/favorites`
                           ? "text-black"
-                          : "text-secondary"
+                          : "text-secondary navhover"
                       }
                     >
                       <img

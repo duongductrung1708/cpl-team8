@@ -27,3 +27,15 @@
   display: block;
   padding: 0.5em 1em;
 }
+
+.nav-link.deactive:hover {
+  color: black !important;
+}
+
+.author:hover {
+  text-decoration: underline !important;
+}
+
+.navhover:hover {
+  color: rgb(79, 78, 78) !important;
+}
