@@ -18,9 +18,9 @@ const ArticleDetail = () => {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [postingComment, setPostingComment] = useState(false);
-  
+
   const [isAuthor, setIsAuthor] = useState(false);
-  const [userProfileImage, setUserProfileImage] = useState('');
+  const [userProfileImage, setUserProfileImage] = useState("");
 
   const navigate = useNavigate();
 
@@ -53,33 +53,37 @@ const ArticleDetail = () => {
 
     const fetchUserProfileImage = async () => {
       try {
-        const token = localStorage.getItem('auth-token');
+        const token = localStorage.getItem("auth-token");
         if (token) {
-          const response = await fetch('https://api.realworld.io/api/user', {
+          const response = await fetch("https://api.realworld.io/api/user", {
             headers: {
-              'Authorization': `Token ${token}`
-            }
+              Authorization: `Token ${token}`,
+            },
           });
           const userData = await response.json();
           setUserProfileImage(userData.user.image);
         }
       } catch (error) {
-        console.error('Error fetching user profile image:', error);
+        console.error("Error fetching user profile image:", error);
       }
     };
 
     const fetchComments = async () => {
-      try { 
-        const cachedComments = JSON.parse(localStorage.getItem(`comments_${slug}`));
+      try {
+        const cachedComments = JSON.parse(
+          localStorage.getItem(`comments_${slug}`)
+        );
         if (cachedComments) {
           setComments(cachedComments);
         } else {
-          const response = await fetch(`https://api.realworld.io/api/articles/${slug}/comments`);
+          const response = await fetch(
+            `https://api.realworld.io/api/articles/${slug}/comments`
+          );
           if (!response.ok) {
             throw new Error("Failed to fetch comments");
           }
           const data = await response.json();
-          setComments(data.comments); 
+          setComments(data.comments);
           updateCommentsInStorage(slug, data.comments);
         }
       } catch (error) {
@@ -93,7 +97,7 @@ const ArticleDetail = () => {
   }, [slug]);
 
   const handleEditArticle = () => {
-    navigate(`/editor/${slug}`, { state: { article } }); 
+    navigate(`/editor/${slug}`, { state: { article } });
   };
 
   const handleDeleteArticle = async () => {
@@ -133,7 +137,6 @@ const ArticleDetail = () => {
       setIsFollowingLoading(true);
       const followButton = document.querySelector(".btn-outline-secondary");
 
-      // Toggle the 'active' class on the button
       followButton.classList.toggle("active");
 
       const method = isFollowing ? "DELETE" : "POST";
@@ -170,7 +173,6 @@ const ArticleDetail = () => {
       setIsFavoritedLoading(true);
       const favoriteButton = document.querySelector(".btn-outline-primary");
 
-      // Toggle the 'active' class on the button
       favoriteButton.classList.toggle("active");
 
       const method = isFavorited ? "DELETE" : "POST";
@@ -198,7 +200,6 @@ const ArticleDetail = () => {
       setIsFavoritedLoading(false);
     }
   };
-
 
   const updateCommentsInStorage = (slug, comments) => {
     localStorage.setItem(`comments_${slug}`, JSON.stringify(comments));
@@ -234,8 +235,8 @@ const ArticleDetail = () => {
       const newComment = await response.json();
       const updatedComments = [newComment.comment, ...comments];
       setComments(updatedComments);
-      setCommentText(""); 
-   
+      setCommentText("");
+
       updateCommentsInStorage(slug, updatedComments);
     } catch (error) {
       console.error("Error posting comment:", error);
@@ -260,14 +261,16 @@ const ArticleDetail = () => {
         throw new Error("Failed to delete comment");
       }
 
-      const updatedComments = comments.filter((comment) => comment.id !== commentId);
-    setComments(updatedComments);
- 
-    updateCommentsInStorage(slug, updatedComments);
-  } catch (error) {
-    console.error("Error deleting comment:", error);
-  }
-};
+      const updatedComments = comments.filter(
+        (comment) => comment.id !== commentId
+      );
+      setComments(updatedComments);
+
+      updateCommentsInStorage(slug, updatedComments);
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
+  };
 
   const handleLoginRedirect = () => {
     navigate("/login");
@@ -277,9 +280,7 @@ const ArticleDetail = () => {
     <div className="article-page">
       {article && !loading && (
         <div>
-          <div
-            className="banner" 
-          >
+          <div className="banner">
             <Container>
               <h1>{article.title}</h1>
               <div className="article-meta">
@@ -305,7 +306,7 @@ const ArticleDetail = () => {
                         width="16"
                         height="16"
                         fill="currentColor"
-                        className ="bi bi-pencil-fill"
+                        className="bi bi-pencil-fill"
                         viewBox="0 0 16 16"
                         style={{ marginRight: "3px" }}
                       >
@@ -324,7 +325,7 @@ const ArticleDetail = () => {
                         width="16"
                         height="16"
                         fill="currentColor"
-                        className ="bi bi-trash3-fill"
+                        className="bi bi-trash3-fill"
                         viewBox="0 0 16 16"
                       >
                         <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
@@ -345,11 +346,11 @@ const ArticleDetail = () => {
                         width="16"
                         height="16"
                         fill="currentColor"
-                        className ="bi bi-plus-lg"
+                        className="bi bi-plus-lg"
                         viewBox="0 0 16 16"
                       >
                         <path
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                           d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
                         />
                       </svg>
