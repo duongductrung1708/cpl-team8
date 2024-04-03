@@ -20,15 +20,17 @@ const HomePage = () => {
   }, []);
 
   const fetchData = (page) => {
-    API.getArticles(page, 10, localStorage.getItem("auth-token")).then((data) => {
-      setArticleGlobal(data);
-      setTotalPages(Math.ceil(data.articlesCount / 10));
-    });
+    API.getArticles(page, 10, localStorage.getItem("auth-token")).then(
+      (data) => {
+        setArticleGlobal(data);
+        setTotalPages(Math.ceil(data.articlesCount / 10));
+      }
+    );
   };
 
   const handleTagClick = (tag) => {
     setSelectedTags(tag);
-    setCurrentPage(1); // Reset to first page when changing tags
+    setCurrentPage(1); 
     fetchData(1);
   };
 
@@ -107,10 +109,22 @@ const HomePage = () => {
         </div>
         <div>
           <nav>
-            <ul className="pagination">
+            <ul className="pagination" style={{ marginBottom: "100px" }}>
               {[...Array(totalPages).keys()].map((page) => (
-                <li className={`page-item ${page + 1 === currentPage ? "active" : ""}`} key={page}>
-                  <a style={{float: 'left'}} className="page-link" href onClick={() => handlePageChange(page + 1)}>{page + 1}</a>
+                <li
+                  className={`page-item ${
+                    page + 1 === currentPage ? "active" : ""
+                  }`}
+                  key={page}
+                >
+                  <a
+                    style={{ float: "left", cursor: "pointer" }}
+                    className="page-link"
+                    href="true"
+                    onClick={() => handlePageChange(page + 1)}
+                  >
+                    {page + 1}
+                  </a>
                 </li>
               ))}
             </ul>
