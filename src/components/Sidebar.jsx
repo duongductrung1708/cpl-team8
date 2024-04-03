@@ -9,6 +9,7 @@ const Sidebar = ({ tagList, handleTagClick }) => {
           <div>Loading...</div>
         ) : (
           tagList.tags.map((tag, index) => (
+            // eslint-disable-next-line jsx-a11y/anchor-is-valid
             <a key={index} href="#" className="tag-pill tag-default" style={{ textDecoration: 'none' }} onClick={() => handleTagClick(tag)}>
               {tag}
             </a>

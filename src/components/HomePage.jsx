@@ -6,37 +6,84 @@ import ArticleList from "./ArticleList.jsx";
 import Sidebar from "./Sidebar.jsx";
 
 const HomePage = () => {
-  const [articlesGlobal, setArticleGlobal] = useState(null);
+  const [articles, setArticles] = useState(null);
   const [tags, setTags] = useState(null);
   const [selectedTags, setSelectedTags] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [currTag, setCurrTag] = useState(
+    localStorage.getItem("auth-token") ? "yourfeed" : "globalfeed"
+  );
 
   useEffect(() => {
-    fetchData(currentPage);
+    fetchData(currentPage, currTag);
+
     API.getTags().then((data) => {
       setTags(data);
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchData = (page) => {
-    API.getArticles(page, 10, localStorage.getItem("auth-token")).then(
-      (data) => {
-        setArticleGlobal(data);
+  const fetchData = (page, currTag, tag) => {
+    if (currTag === "yourfeed") {
+      API.getArticlesOfFollowed(
+        page,
+        10,
+        localStorage.getItem("auth-token")
+      ).then((data) => {
+        setArticles(data.articles);
         setTotalPages(Math.ceil(data.articlesCount / 10));
-      }
-    );
+      });
+    } else if (currTag === "globalfeed") {
+      API.getArticles(page, 10, localStorage.getItem("auth-token")).then(
+        (data) => {
+          setArticles(data.articles);
+          setTotalPages(Math.ceil(data.articlesCount / 10));
+        }
+      );
+    } else if (currTag === "filterfeed") {
+      API.getArticlesByTag(
+        page,
+        10,
+        localStorage.getItem("auth-token"),
+        tag ? tag : selectedTags
+      ).then((data) => {
+        console.log(data);
+        setArticles(data.articles);
+        setTotalPages(Math.ceil(data.articlesCount / 10));
+      });
+    }
+  };
+
+  const handleClickYourFeedTag = () => {
+    setCurrTag("yourfeed");
+    setArticles(null);
+    fetchData(1, "yourfeed");
+  };
+
+  const handleClickGlobalFeedTag = () => {
+    setCurrTag("globalfeed");
+    setArticles(null);
+    fetchData(1, "globalfeed");
+  };
+
+  const handleClickFilterFeedTag = () => {
+    setCurrTag("filterfeed");
+    setArticles(null);
+    fetchData(1, "filterfeed");
   };
 
   const handleTagClick = (tag) => {
     setSelectedTags(tag);
-    setCurrentPage(1); 
-    fetchData(1);
+    fetchData(1, "filterfeed", tag);
+    setCurrTag("filterfeed");
+    setCurrentPage(1);
   };
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
-    fetchData(page);
+    fetchData(page, currTag);
   };
 
   return (
@@ -78,18 +125,30 @@ const HomePage = () => {
           <div className="col-md-9">
             <div className="border-bottom">
               <ul className="nav">
+                {localStorage.getItem("auth-token") && (
+                  <li
+                    onClick={handleClickYourFeedTag}
+                    className={`nav-item py-2 px-3 ${
+                      currTag === "yourfeed" && "active"
+                    }`}
+                  >
+                    Your Feed
+                  </li>
+                )}
                 <li
+                  onClick={handleClickGlobalFeedTag}
                   className={`nav-item py-2 px-3 ${
-                    selectedTags ? "" : "active"
+                    currTag === "globalfeed" && "active"
                   }`}
-                  style={{ color: selectedTags ? "#aaa" : "rgb(92, 184, 92)" }}
                 >
                   Global Feed
                 </li>
                 {selectedTags && (
                   <li
-                    className="nav-item py-2 px-3 active"
-                    style={{ color: "rgb(92, 184, 92)" }}
+                    onClick={handleClickFilterFeedTag}
+                    className={`nav-item py-2 px-3 ${
+                      currTag === "filterfeed" && "active"
+                    }`}
                   >
                     #{selectedTags}
                   </li>
@@ -97,12 +156,11 @@ const HomePage = () => {
               </ul>
             </div>
             <ArticleList
-              articleList={articlesGlobal && articlesGlobal.articles}
-              setArticleList={setArticleGlobal}
+              articleList={articles}
+              setArticleList={setArticles}
               selectedTags={selectedTags}
             />
           </div>
-
           <div className="col-md-3">
             <Sidebar tagList={tags} handleTagClick={handleTagClick} />
           </div>
@@ -120,7 +178,7 @@ const HomePage = () => {
                   <a
                     style={{ float: "left", cursor: "pointer" }}
                     className="page-link"
-                    href 
+                    href
                     onClick={() => handlePageChange(page + 1)}
                   >
                     {page + 1}
