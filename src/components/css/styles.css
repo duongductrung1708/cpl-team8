@@ -61,3 +61,12 @@
   --bs-btn-active-border-color: #5cb85c !important;
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
+
+.selected-tag {
+  text-decoration: underline !important;
+  background-color: #757575 !important ; 
+}
+
+.selected-tag:hover {
+  text-decoration: none !important;
+}
