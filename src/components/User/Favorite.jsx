@@ -383,6 +383,7 @@ const Favorite = () => {
                 <button
                   className="btn btn-secondary ms-1"
                   onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={userArticles.length < PAGE_SIZE}
                 >
                   Next
                 </button>
