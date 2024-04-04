@@ -5,6 +5,8 @@ import Footer from "../Footer";
 import '../css/styles.css';
 import UserBanner from "./UserBanner";
 
+const PAGE_SIZE = 5;
+
 const getUserProfileByUsername = async (username) => {
   try {
     const response = await fetch(
@@ -30,10 +32,10 @@ const getUserProfileByUsername = async (username) => {
   }
 };
 
-const getUserArticlesByUsername = async (username) => {
+const getUserArticlesByUsername = async (username, offset) => {
   try {
     const response = await fetch(
-      `https://api.realworld.io/api/articles?limit=5&offset=0&author=${username}`,
+      `https://api.realworld.io/api/articles?limit=${PAGE_SIZE}&offset=${offset}&author=${username}`,
       {
         method: "GET",
         headers: {
@@ -86,6 +88,7 @@ const UserProfile = () => {
   const { username } = useParams();
   const [userProfile, setUserProfile] = useState(null);
   const [userArticles, setUserArticles] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -101,7 +104,8 @@ const UserProfile = () => {
   
     const fetchUserArticles = async () => {
       try {
-        const articlesData = await getUserArticlesByUsername(username);
+        const offset = (currentPage - 1) * PAGE_SIZE;
+        const articlesData = await getUserArticlesByUsername(username, offset);
         setUserArticles(articlesData);
       } catch (error) {
         console.error("Error fetching user articles:", error);
@@ -113,7 +117,7 @@ const UserProfile = () => {
     fetchProfile();
     fetchUserArticles();
     
-  }, [username]);
+  }, [username, currentPage]);
 
   const handleToggleFavorite = async (slug, isFavorited) => {
     try {
@@ -129,6 +133,10 @@ const UserProfile = () => {
     } catch (error) {
       console.error("Error toggling favorite:", error);
     }
+  };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -364,6 +372,25 @@ const UserProfile = () => {
                 )}
               </div>
             </div>
+            {userArticles.length > 0 && (
+              <div className="pagination-container d-flex justify-content-center mt-4">
+                <button
+                  className="btn btn-secondary me-1"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+                <span className="align-self-center me-1">{currentPage}</span>
+                <button
+                  className="btn btn-secondary ms-1"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={userArticles.length < PAGE_SIZE}
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </Container>
         </>
       )}
