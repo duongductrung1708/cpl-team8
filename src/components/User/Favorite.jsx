@@ -5,6 +5,8 @@ import Footer from "../Footer";
 import "../css/styles.css";
 import UserBanner from "./UserBanner";
 
+const PAGE_SIZE = 5;
+
 const getUserProfileByUsername = async (username) => {
   try {
     const response = await fetch(
@@ -29,10 +31,10 @@ const getUserProfileByUsername = async (username) => {
   }
 };
 
-const getUserArticlesByUsername = async (username) => {
+const getUserArticlesByUsername = async (username, offset) => {
   try {
     const response = await fetch(
-      `https://api.realworld.io/api/articles?limit=5&offset=0&favorited=${username}`,
+      `https://api.realworld.io/api/articles?limit=${PAGE_SIZE}&offset=${offset}&favorited=${username}`,
       {
         method: "GET",
         headers: {
@@ -84,6 +86,7 @@ const Favorite = () => {
   const { username } = useParams();
   const [userProfile, setUserProfile] = useState(null);
   const [userArticles, setUserArticles] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -98,22 +101,23 @@ const Favorite = () => {
 
     const fetchUserArticles = async () => {
       try {
-        const articlesData = await getUserArticlesByUsername(username);
+        const offset = (currentPage - 1) * PAGE_SIZE;
+        const articlesData = await getUserArticlesByUsername(username, offset);
         const updatedArticles = articlesData.map((article) => ({
           ...article,
           favorited: true,
         }));
         setUserArticles(updatedArticles);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching user articles:", error);
-      } finally {
         setIsLoading(false);
       }
     };
 
     fetchProfile();
     fetchUserArticles();
-  }, [username]);
+  }, [username, currentPage]);
 
   const handleToggleFavorite = async (slug, isFavorited) => {
     try {
@@ -131,12 +135,16 @@ const Favorite = () => {
     }
   };
 
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div className="profile-page">
       {userProfile && (
         <>
           <UserBanner />
-          <Container style={{marginBottom: "100px"}}>
+          <Container style={{ marginBottom: "100px" }}>
             <div className="row">
               <div className="col-xs-12 col-md-10 offset-md-1">
                 {isLoading && <div>Loading articles...</div>}
@@ -362,6 +370,24 @@ const Favorite = () => {
                 )}
               </div>
             </div>
+            {userArticles.length > 0 && (
+              <div className="pagination-container d-flex justify-content-center mt-4">
+                <button
+                  className="btn btn-secondary me-1"
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+                <span className="align-self-center me-1">{currentPage}</span>
+                <button
+                  className="btn btn-secondary ms-1"
+                  onClick={() => handlePageChange(currentPage + 1)}
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </Container>
         </>
       )}
