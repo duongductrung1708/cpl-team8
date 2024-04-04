@@ -47,3 +47,12 @@
 .nav-item.false:hover {
   color: #000;
 }
+
+.selected-tag {
+  text-decoration: underline !important;
+  background-color: #757575 !important ; 
+}
+
+.selected-tag:hover {
+  text-decoration: none !important;
+}
