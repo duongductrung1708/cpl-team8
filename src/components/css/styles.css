@@ -40,6 +40,10 @@
   color: rgb(79, 78, 78) !important;
 }
 
-.tag-pill.tag-default.sidebar-tag:hover{
+.tag-pill.tag-default.sidebar-tag:hover {
   background-color: #757575 !important;
+}
+
+.nav-item.false:hover {
+  color: #000;
 }
