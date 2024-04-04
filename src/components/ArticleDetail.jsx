@@ -179,7 +179,7 @@ const ArticleDetail = () => {
 
     try {
       setIsFavoritedLoading(true);
-      const favoriteButton = document.querySelector(".btn-outline-primary");
+      const favoriteButton = document.querySelector(".favo-btn");
 
       favoriteButton.classList.toggle("active");
 
@@ -365,7 +365,7 @@ const ArticleDetail = () => {
                     </button>{" "}
                     &nbsp;
                     <button
-                      className="btn btn-sm btn-outline-primary"
+                      className="btn btn-sm favo-btn"
                       onClick={toggleFavorite}
                      
                     >

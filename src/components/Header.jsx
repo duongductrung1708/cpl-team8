@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
-import './css/styles.css';
+import "./css/styles.css";
 
 const getUserInfo = async () => {
   try {
