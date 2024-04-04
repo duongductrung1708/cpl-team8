@@ -130,13 +130,10 @@ const ArticleDetail = () => {
   const handleLoginRedirect = () => {
     navigate("/signup");
   };
-  const handleRedirect = () => {
-    navigate("/signin");
-  };
+ 
 
   const toggleFollow = async () => {
-    // !isLoggedIn  isFollowingLoading
-    if (!isLoggedIn) {
+    if (!isLoggedIn || isFollowingLoading) {
       handleLoginRedirect();
       return;
     }
@@ -171,8 +168,12 @@ const ArticleDetail = () => {
     }
   };
 
+  const handleRedirect = () => {
+    navigate("/signin");
+  };
+
   const toggleFavorite = async () => {
-    if (handleRedirect) {
+    if (isFavoritedLoading || !isLoggedIn) {
       handleRedirect();
       return;
     }
@@ -367,7 +368,6 @@ const ArticleDetail = () => {
                     <button
                       className="btn btn-sm btn-outline-primary"
                       onClick={toggleFavorite}
-                     
                     >
                       <i className="ion-heart"></i>{" "}
                       <svg
