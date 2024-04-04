@@ -36,8 +36,12 @@
   text-decoration: underline !important;
 }
 
-.navhover:hover {
+.text-secondary.navhover:hover {
   color: rgb(79, 78, 78) !important;
+}
+
+.text-secondary.navhover {
+  color: rgba(0, 0, 0, 0.3) !important;
 }
 
 .tag-pill.tag-default.sidebar-tag:hover {
@@ -64,9 +68,13 @@
 
 .selected-tag {
   text-decoration: underline !important;
-  background-color: #757575 !important ; 
+  background-color: #757575 !important;
 }
 
 .selected-tag:hover {
   text-decoration: none !important;
+}
+
+.thinkster:hover {
+  text-decoration: underline !important;
 }

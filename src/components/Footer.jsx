@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import "./css/styles.css";
 
 const Footer = () => {
   const [hasContent, setHasContent] = useState(false);
@@ -56,6 +57,7 @@ const Footer = () => {
         >
           An interactive learning project from{" "}
           <Link
+            className="thinkster"
             to={"https://thinkster.io"}
             previewlistener="true"
             style={{
