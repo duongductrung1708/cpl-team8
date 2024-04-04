@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import API from "../api/API.js";
 import ArticleList from "./ArticleList.jsx";
 import Sidebar from "./Sidebar.jsx";
+import "./css/styles.css";
 
 const HomePage = () => {
   const [articles, setArticles] = useState(null);
@@ -21,8 +22,6 @@ const HomePage = () => {
     API.getTags().then((data) => {
       setTags(data);
     });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = (page, currTag, tag) => {

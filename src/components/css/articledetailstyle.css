@@ -333,9 +333,21 @@ form {
   color: #333;
 }
 
-.btn-outline-primary {
+.favo-btn.active {
   color: #fff !important;
   background-color: #6ec06e !important;
   border-color: #6ec06e !important;
   --bs-btn-active-bg: #6ec06e !important;
+}
+
+.favo-btn {
+  color: #5cb85c !important;
+  background-color: transparent;
+  border-color: #6ec06e !important;
+  background-image: none;
+}
+
+.favo-btn:hover {
+  color: #fff !important;
+  background-color: #6ec06e !important;
 }
