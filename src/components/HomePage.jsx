@@ -22,6 +22,7 @@ const HomePage = () => {
     API.getTags().then((data) => {
       setTags(data);
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = (page, currTag, tag) => {
@@ -174,14 +175,13 @@ const HomePage = () => {
                   }`}
                   key={page}
                 >
-                  <a
+                  <div
                     style={{ float: "left", cursor: "pointer" }}
                     className="page-link"
-                    href
                     onClick={() => handlePageChange(page + 1)}
                   >
                     {page + 1}
-                  </a>
+                  </div>
                 </li>
               ))}
             </ul>
