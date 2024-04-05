@@ -233,3 +233,15 @@ ul.tag-list li {
     border-bottom-right-radius: .2rem;
     border-top-right-radius: .2rem
 }
+
+.like-btn__container.disabled:hover {
+  cursor: not-allowed;
+}
+
+.like-btn__container.disabled button {
+  color: #fff !important;
+  opacity: 0.65 !important; 
+  cursor: not-allowed !important;
+  background: #5cb85c !important;
+  pointer-events: none;
+}
