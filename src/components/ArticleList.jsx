@@ -1,9 +1,13 @@
-import React from "react";
+import React, {  } from "react";
 import API from "../api/API";
+import { useNavigate } from "react-router-dom";
 
 const ArticleList = ({ articleList, setArticleList }) => {
-  const handleClickLikeBtn = (slug, isLiked) => {
+  const nav = useNavigate();
+
+  const handleClickLikeBtn = (e, slug, isLiked) => {
     if (localStorage.getItem("auth-token")) {
+      e.target.parentElement.classList.add("disabled");
       API.toggleLikeArticle(slug, isLiked).then((data) => {
         setArticleList((prevArticles) => {
           const index = prevArticles.findIndex(
@@ -13,13 +17,15 @@ const ArticleList = ({ articleList, setArticleList }) => {
           updatedArticles[index] = data.article;
           return updatedArticles;
         });
+        e.target.parentElement.classList.remove("disabled");
       });
+    } else {
+      nav("/signup");
     }
   };
 
   return (
     <div>
-
       {(!articleList && <div>Loading...</div>) ||
         (articleList.length === 0 && <div>There is no article yet</div>) ||
         (articleList.length > 0 &&
@@ -40,26 +46,30 @@ const ArticleList = ({ articleList, setArticleList }) => {
                         />
                       </a>
                       <div className="info d-flex flex-column ">
-                        <a className="author" href={`/profile/${a.author.username}`}>
+                        <a
+                          className="author"
+                          href={`/profile/${a.author.username}`}
+                        >
                           {a.author.username}
                         </a>
                         <span className="date">January 4, 2024</span>
                       </div>
                     </div>
-                    <button
-                      onClick={() => handleClickLikeBtn(a.slug, a.favorited)}
-                      className={`btn btn-sm btn${
-                        a.favorited ? "" : "-outline"
-                      }-primary pull-xs-right h-25`}
-                    >
-                      <i className="bi bi-suit-heart-fill"></i>{" "}
-                      {a.favoritesCount}
-                    </button>
+                    <div className={`h-25 like-btn__container`}>
+                      <button
+                        onClick={(e) =>
+                          handleClickLikeBtn(e, a.slug, a.favorited)
+                        }
+                        className={`btn btn-sm btn${
+                          a.favorited ? "" : "-outline"
+                        }-primary pull-xs-right h-100 w-100 like-btn `}
+                      >
+                        <i className="bi bi-suit-heart-fill"></i>{" "}
+                        {a.favoritesCount}
+                      </button>
+                    </div>
                   </div>
-                  <a
-                    className="preview-link"
-                    href={`/article/${a.slug}`}
-                  >
+                  <a className="preview-link" href={`/article/${a.slug}`}>
                     <h1>{a.title}</h1>
                     <p>{a.description}</p>
                     <span>Read more...</span>
