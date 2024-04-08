@@ -11,7 +11,7 @@ const HomePage = () => {
   const [tags, setTags] = useState(null);
   const [selectedTags, setSelectedTags] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [currTag, setCurrTag] = useState(
     localStorage.getItem("auth-token") ? "yourfeed" : "globalfeed"
   );
@@ -22,7 +22,7 @@ const HomePage = () => {
     API.getTags().then((data) => {
       setTags(data);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+   
   }, []);
 
   const fetchData = (page, currTag, tag) => {

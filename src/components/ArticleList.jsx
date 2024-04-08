@@ -26,7 +26,7 @@ const ArticleList = ({ articleList, setArticleList }) => {
 
   return (
     <div>
-      {(!articleList && <div>Loading...</div>) ||
+      {(!articleList && <div style={{textAlign: 'center'}}>Loading Acticle...</div>) ||
         (articleList.length === 0 && <div>There is no article yet</div>) ||
         (articleList.length > 0 &&
           articleList.map((a) => {
