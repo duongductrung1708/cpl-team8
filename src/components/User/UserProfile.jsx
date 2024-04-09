@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../Footer";
-import '../css/styles.css';
+import "../css/styles.css";
 import UserBanner from "./UserBanner";
 
 const PAGE_SIZE = 5;
@@ -92,7 +92,6 @@ const UserProfile = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-   
     const fetchProfile = async () => {
       try {
         const profileData = await getUserProfileByUsername(username);
@@ -101,7 +100,7 @@ const UserProfile = () => {
         console.error("Error fetching user profile:", error);
       }
     };
-  
+
     const fetchUserArticles = async () => {
       try {
         const offset = (currentPage - 1) * PAGE_SIZE;
@@ -113,11 +112,24 @@ const UserProfile = () => {
         setIsLoading(false);
       }
     };
-    
-    fetchProfile();
+
     fetchUserArticles();
-    
+    fetchProfile();
   }, [username, currentPage]);
+
+  const [isOverFlow, setIsOverFlow] = useState(false);
+  useEffect(() => {
+    if (isOverFlow) {
+      document.querySelector(".footer").classList.remove("not-has-content");
+    } else {
+      if (
+        !document.querySelector(".footer").classList.contains("not-has-content")
+      ) {
+        document.querySelector(".footer").classList.add("not-has-content");
+      }
+    }
+    setIsOverFlow(document.documentElement.scrollHeight > window.innerHeight);
+  }, [userArticles, userProfile, isOverFlow]);
 
   const handleToggleFavorite = async (slug, isFavorited) => {
     try {
@@ -143,8 +155,8 @@ const UserProfile = () => {
     <div className="profile-page">
       {userProfile && (
         <>
-        <UserBanner />
-          <Container style={{marginBottom: "100px"}}>
+          <UserBanner />
+          <Container style={{ marginBottom: "100px" }}>
             <div className="row">
               <div className="col-xs-12 col-md-10 offset-md-1">
                 {isLoading && <div>Loading articles...</div>}

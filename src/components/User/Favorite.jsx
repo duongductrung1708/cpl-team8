@@ -89,6 +89,20 @@ const Favorite = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [isOverFlow, setIsOverFlow] = useState(false);
+  useEffect(() => {
+    if (isOverFlow) {
+      document.querySelector(".footer").classList.remove("not-has-content");
+    } else {
+      if (
+        !document.querySelector(".footer").classList.contains("not-has-content")
+      ) {
+        document.querySelector(".footer").classList.add("not-has-content");
+      }
+    }
+    setIsOverFlow(document.documentElement.scrollHeight > window.innerHeight);
+  }, [userArticles, isOverFlow]);
+
   useEffect(() => {
     const fetchProfile = async () => {
       try {
