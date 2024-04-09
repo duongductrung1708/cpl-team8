@@ -158,7 +158,7 @@ const Favorite = () => {
       {userProfile && (
         <>
           <UserBanner />
-          <Container style={{ marginBottom: "100px" }}>
+          <Container style={{ marginBottom: "50px" }}>
             <div className="row">
               <div className="col-xs-12 col-md-10 offset-md-1">
                 {isLoading && <div>Loading articles...</div>}

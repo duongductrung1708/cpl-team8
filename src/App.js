@@ -1,5 +1,5 @@
 import React from "react";
-import './App.css';
+import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/HomePage";
@@ -21,14 +21,35 @@ function App() {
         <Routes>
           <Route path="/" exact component={Home} element={<HomePage />} />
           <Route path="/home" component={Home} element={<HomePage />} />
-          <Route path="/signin" component={SignIn} element={<SignIn />}/>
-          <Route path="/signup" component={SignUp} element={<SignUp />}/>
-          <Route path="/settings" component={Setting} element={<Setting />}/>
-          <Route path="/profile/:username" component={UserProfile} element={<UserProfile />}/>
-          <Route path="/profile/:username/favorites" component={Favorite} element={<Favorite />}/>
-          <Route path="/editor/:slug" component={CreateArticle} element={<CreateArticle />}/>
-          <Route path="/editor" exact component={CreateArticle} element={<CreateArticle />}/>
-          <Route path="/article/:slug" component={ArticleDetail} element={<ArticleDetail />}/>
+          <Route path="/signin" component={SignIn} element={<SignIn />} />
+          <Route path="/signup" component={SignUp} element={<SignUp />} />
+          <Route path="/settings" component={Setting} element={<Setting />} />
+          <Route
+            path="/profile/:username"
+            component={UserProfile}
+            element={<UserProfile />}
+          />
+          <Route
+            path="/profile/:username/favorites"
+            component={Favorite}
+            element={<Favorite />}
+          />
+          <Route
+            path="/editor/:slug"
+            component={CreateArticle}
+            element={<CreateArticle />}
+          />
+          <Route
+            path="/editor"
+            exact
+            component={CreateArticle}
+            element={<CreateArticle />}
+          />
+          <Route
+            path="/article/:slug"
+            component={ArticleDetail}
+            element={<ArticleDetail />}
+          />
         </Routes>
       </div>
     </Router>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, NavLink, useLocation, useParams } from "react-router-dom";
 import "../css/styles.css";
 
 const getUserProfileByUsername = async (username) => {
@@ -178,7 +178,7 @@ const UserBanner = () => {
                     }}
                   >
                     <li className="nav-item" style={{ float: "left" }}>
-                      <Link
+                      <NavLink
                         className={
                           location.pathname === `/profile/${username}`
                             ? "nav-link active"
@@ -197,17 +197,17 @@ const UserBanner = () => {
                         }}
                       >
                         My Articles
-                      </Link>
+                      </NavLink>
                     </li>
                     <li
                       className="nav-item"
                       style={{ marginLeft: ".2rem", float: "left" }}
                     >
-                      <Link
+                      <NavLink
                         className={
                           location.pathname === `/profile/${username}/favorites`
                             ? "nav-link active"
-                            : "nav-link deactive"
+                            : "nav-link "
                         }
                         to={`/profile/${username}/favorites`}
                         style={{
@@ -220,7 +220,7 @@ const UserBanner = () => {
                         }}
                       >
                         Favorited Articles
-                      </Link>
+                      </NavLink>
                     </li>
                   </ul>
                 </div>
