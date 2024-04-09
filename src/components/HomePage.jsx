@@ -15,6 +15,7 @@ const HomePage = () => {
   const [currTag, setCurrTag] = useState(
     localStorage.getItem("auth-token") ? "yourfeed" : "globalfeed"
   );
+  const [isOverFlow, setIsOverFlow] = useState(false);
 
   useEffect(() => {
     fetchData(currentPage, currTag);
@@ -22,8 +23,21 @@ const HomePage = () => {
     API.getTags().then((data) => {
       setTags(data);
     });
-   
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (isOverFlow) {
+      document.querySelector(".footer").classList.remove("not-has-content");
+    } else {
+      if (
+        !document.querySelector(".footer").classList.contains("not-has-content")
+      ) {
+        document.querySelector(".footer").classList.add("not-has-content");
+      }
+    }
+    setIsOverFlow(document.documentElement.scrollHeight > window.innerHeight);
+  }, [articles, isOverFlow]);
 
   const fetchData = (page, currTag, tag) => {
     if (currTag === "yourfeed") {
