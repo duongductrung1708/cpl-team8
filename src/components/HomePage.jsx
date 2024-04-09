@@ -74,18 +74,21 @@ const HomePage = () => {
     setCurrTag("yourfeed");
     setArticles(null);
     fetchData(1, "yourfeed");
+    setTotalPages(0)
   };
 
   const handleClickGlobalFeedTag = () => {
     setCurrTag("globalfeed");
     setArticles(null);
     fetchData(1, "globalfeed");
+    setTotalPages(0)
   };
 
   const handleClickFilterFeedTag = () => {
     setCurrTag("filterfeed");
     setArticles(null);
     fetchData(1, "filterfeed");
+    setTotalPages(0)
   };
 
   const handleTagClick = (tag) => {
@@ -93,6 +96,7 @@ const HomePage = () => {
     fetchData(1, "filterfeed", tag);
     setCurrTag("filterfeed");
     setCurrentPage(1);
+    setTotalPages(0)
   };
 
   const handlePageChange = (page) => {
