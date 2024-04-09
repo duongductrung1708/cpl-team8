@@ -245,3 +245,16 @@ ul.tag-list li {
   background: #5cb85c !important;
   pointer-events: none;
 }
+
+.footer {
+  background: #f3f3f3;
+  margin-top: 3rem;
+  padding: 1rem 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 5;
+}
+
+.footer.not-has-content {
+  position: absolute;
+}
