@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
-import Footer from "../Footer";
 import "../css/styles.css";
 import UserBanner from "./UserBanner";
 
@@ -406,7 +405,50 @@ const UserProfile = () => {
           </Container>
         </>
       )}
-      <Footer />
+      <footer className="footer not-has-content" style={{position: "relative", bottom: 0}}>
+      <Container>
+        <Link
+          className="logo-font"
+          to={"/home"}
+          previewlistener="true"
+          style={{
+            verticalAlign: "middle",
+            color: "#5cb85c",
+            textDecoration: "none",
+            fontWeight: "700",
+            backgroundColor: "transparent",
+          }}
+        >
+          conduit
+        </Link>
+        <span
+          className="attribution"
+          style={{
+            verticalAlign: "middle",
+            marginLeft: "10px",
+            fontSize: ".8rem",
+            color: "#bbb",
+            fontWeight: "300",
+          }}
+        >
+          An interactive learning project from{" "}
+          <Link
+            className="thinkster"
+            to={"https://thinkster.io"}
+            previewlistener="true"
+            style={{
+              touchAction: "manipulation",
+              color: "#5cb85c",
+              textDecoration: "none",
+              backgroundColor: "transparent",
+            }}
+          >
+            Thinkster
+          </Link>
+          . Code &amp; design licensed under MIT.
+        </span>
+      </Container>
+    </footer>
     </div>
   );
 };
