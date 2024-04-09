@@ -39,7 +39,11 @@ const updateUserProfile = async (userData) => {
 
     if (!response.ok) {
       const responseData = await response.json();
-      throw new Error(responseData.errors ? responseData.errors : "Failed to update user profile");
+      throw new Error(
+        responseData.errors
+          ? responseData.errors
+          : "Failed to update user profile"
+      );
     }
 
     const updatedUserData = await response.json();
@@ -52,7 +56,7 @@ const updateUserProfile = async (userData) => {
 
 const Setting = () => {
   const [formData, setFormData] = useState({
-    email: "",  
+    email: "",
     password: "",
     username: "",
     bio: "",
@@ -67,7 +71,7 @@ const Setting = () => {
         const user = await getUserProfile();
         setFormData((prevFormData) => ({
           ...prevFormData,
-          email: user.email, 
+          email: user.email,
           username: user.username,
           bio: user.bio || "",
           image: user.image || "",
@@ -80,6 +84,10 @@ const Setting = () => {
 
     fetchUserProfile();
   }, [navigate]);
+
+  useEffect(() => {
+    document.querySelector(".footer").classList.remove("not-has-content");
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -106,7 +114,7 @@ const Setting = () => {
 
   return (
     <div>
-      <div className="settings-page" style={{height: "520px"}}>
+      <div className="settings-page">
         <Container className="page" style={{ marginTop: "1.5rem" }}>
           <div className="row">
             <div
@@ -118,9 +126,11 @@ const Setting = () => {
               }}
             >
               <h1 className="text-center">Your Settings</h1>
-              {error && <ul className="text-danger fw-bold">
-                <li>{error}</li>
-                </ul>}
+              {error && (
+                <ul className="text-danger fw-bold">
+                  <li>{error}</li>
+                </ul>
+              )}
               <form onSubmit={handleSubmit}>
                 <fieldset>
                   <fieldset
@@ -186,7 +196,7 @@ const Setting = () => {
                       type="text"
                       placeholder="Email"
                       name="email"
-                      value={formData.email} 
+                      value={formData.email}
                       style={{
                         padding: ".75rem 1.5rem",
                         fontSize: "1.25rem",
@@ -230,7 +240,11 @@ const Setting = () => {
                 </fieldset>
               </form>
               <hr />
-              <button className="btn btn-outline-danger" style={{marginBottom: "5rem"}} onClick={handleLogout}>
+              <button
+                className="btn btn-outline-danger"
+                style={{ marginBottom: "5rem" }}
+                onClick={handleLogout}
+              >
                 Or click here to logout.
               </button>
             </div>
