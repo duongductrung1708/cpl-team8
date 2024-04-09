@@ -1,35 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./css/styles.css";
 
 const Footer = () => {
-  const [hasContent, setHasContent] = useState(false);
-
-  useEffect(() => {
-    const handleContent = () => {
-      const contentHeight = document.body.clientHeight;
-      const windowHeight = window.innerHeight;
-      setHasContent(contentHeight > windowHeight);
-    };
-
-    handleContent();
-    window.addEventListener("resize", handleContent);
-    return () => window.removeEventListener("resize", handleContent);
-  }, []);
-
-  const footerStyle = {
-    background: "#f3f3f3",
-    marginTop: "3rem",
-    padding: "1rem 0",
-    position: "fixed",
-    bottom: hasContent ? "" : "0",
-    width: "100%",
-    zIndex: "999",
-  };
 
   return (
-    <footer className="footer" style={footerStyle}>
+    <footer className="footer not-has-content">
       <Container>
         <Link
           className="logo-font"
