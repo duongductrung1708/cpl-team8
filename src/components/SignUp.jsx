@@ -40,7 +40,7 @@ const SignUp = () => {
           const messages = Object.values(responseData.errors).flatMap(
             (error) => error
           );
-          setErrorMessages(messages);
+          setErrorMessages(["Username, Email or Password can't be blank"]);
         } else {
           setErrorMessages(["An error occurred. Please try again."]);
         }

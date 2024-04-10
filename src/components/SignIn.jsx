@@ -19,6 +19,11 @@ const SignIn = () => {
     e.preventDefault();
     console.log("login", formData);
 
+    if (!formData.email || !formData.password) {
+      setErrorMessages(["Email or Password can't be blank"]);
+      return;
+    }
+
     try {
       const response = await fetch("https://api.realworld.io/api/users/login", {
         method: "POST",
@@ -40,9 +45,9 @@ const SignIn = () => {
           const messages = Object.values(responseData.errors).flatMap(
             (error) => error
           );
-          setErrorMessages(messages);
+          setErrorMessages(["Email or Password is incorrect"]);
         } else {
-          setErrorMessages(["An error occurred. Please try again."]);
+          setErrorMessages(["Email or Password is incorrect"]);
         }
         console.error("Error:", responseData.errors);
       }
