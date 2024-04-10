@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import "./css/articledetailstyle.css";
-import Footer from "./Footer";
 import { Container } from "react-bootstrap";
 
 const ArticleDetail = () => {
@@ -415,7 +414,7 @@ const ArticleDetail = () => {
             <div className="row">
               <div
                 className="than col-xs-12 col-md-8 offset-md-2"
-                style={{ marginBottom: "100px" }}
+                style={{ marginBottom: "50px" }}
               >
                 {isLoggedIn ? (
                   <form
@@ -503,7 +502,50 @@ const ArticleDetail = () => {
           </div>
         </div>
       )}
-      <Footer />
+      <footer className="footer not-has-content" style={{position: "relative", bottom: 0}}>
+      <Container>
+        <Link
+          className="logo-font"
+          to={"/home"}
+          previewlistener="true"
+          style={{
+            verticalAlign: "middle",
+            color: "#5cb85c",
+            textDecoration: "none",
+            fontWeight: "700",
+            backgroundColor: "transparent",
+          }}
+        >
+          conduit
+        </Link>
+        <span
+          className="attribution"
+          style={{
+            verticalAlign: "middle",
+            marginLeft: "10px",
+            fontSize: ".8rem",
+            color: "#bbb",
+            fontWeight: "300",
+          }}
+        >
+          An interactive learning project from{" "}
+          <Link
+            className="thinkster"
+            to={"https://thinkster.io"}
+            previewlistener="true"
+            style={{
+              touchAction: "manipulation",
+              color: "#5cb85c",
+              textDecoration: "none",
+              backgroundColor: "transparent",
+            }}
+          >
+            Thinkster
+          </Link>
+          . Code &amp; design licensed under MIT.
+        </span>
+      </Container>
+    </footer>
     </div>
   );
 };
