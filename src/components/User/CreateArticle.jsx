@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container } from "react-bootstrap";
 import Footer from "../Footer";
 import { useNavigate, useLocation } from "react-router-dom";
+import AuthenticationCheck from "./AuthenticationCheck";
 
 const CreateArticle = () => {
   const nav = useNavigate();
@@ -232,4 +233,4 @@ const CreateArticle = () => {
   );
 };
 
-export default CreateArticle;
+export default AuthenticationCheck(CreateArticle);
