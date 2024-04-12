@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import { Link, NavLink, useLocation, useParams } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import "../css/styles.css";
 
 const getUserProfileByUsername = async (username) => {
   try {
+    const authToken = localStorage.getItem("auth-token") || "";
     const response = await fetch(
       `https://api.realworld.io/api/profiles/${username}`,
       {
         method: "GET",
         headers: {
           Accept: "application/json",
-          Authorization: `Token ${localStorage.getItem("auth-token")}`,
+          Authorization: `Token ${authToken}`,
         },
       }
     );
@@ -30,6 +31,7 @@ const getUserProfileByUsername = async (username) => {
 
 const followUser = async (username, isFollowing) => {
   try {
+    const authToken = localStorage.getItem("auth-token") || "";
     const method = isFollowing ? "DELETE" : "POST";
     const response = await fetch(
       `https://api.realworld.io/api/profiles/${username}/follow`,
@@ -37,7 +39,7 @@ const followUser = async (username, isFollowing) => {
         method,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Token ${localStorage.getItem("auth-token")}`,
+          Authorization: `Token ${authToken}`,
         },
       }
     );
@@ -59,6 +61,7 @@ const UserBanner = () => {
   const [authenticatedUsername, setAuthenticatedUsername] = useState("");
   const [isFollowing, setIsFollowing] = useState(false);
   const location = useLocation();
+  const nav = useNavigate();
 
   useEffect(() => {
     const authUsername = localStorage.getItem("auth-username");
@@ -79,6 +82,10 @@ const UserBanner = () => {
 
   const handleToggleFollow = async () => {
     try {
+      if (!localStorage.getItem("auth-token")) {
+        nav("/signup");
+        return;
+      }
       const updatedProfile = await followUser(username, isFollowing);
       setIsFollowing(updatedProfile.profile.following);
     } catch (error) {
