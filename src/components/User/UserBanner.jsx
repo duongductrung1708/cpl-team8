@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import { Link, NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import "../css/styles.css";
-import SettingsIcon from '@mui/icons-material/Settings';
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const getUserProfileByUsername = async (username) => {
   try {
@@ -106,12 +112,6 @@ const UserBanner = () => {
               <div className="row">
                 <div className="col-xs-12 col-md-10 offset-md-1">
                   <img
-                    style={{
-                      width: "100px",
-                      height: "100px",
-                      borderRadius: "100px",
-                      marginBottom: "1rem",
-                    }}
                     src={userProfile.image}
                     className="user-img"
                     alt="profile avatar"
@@ -122,34 +122,13 @@ const UserBanner = () => {
                   <p>{userProfile.bio}</p>
                   {authenticatedUsername === username ? (
                     <Link
-                      style={{
-                        float: "right",
-                        color: "#999",
-                        border: "1px solid #999",
-                        padding: ".25rem .5rem",
-                        fontSize: ".875rem",
-                        borderRadius: ".2rem",
-                        backgroundImage: "none",
-                        backgroundColor: "transparent",
-                      }}
                       className="setting-btn btn btn-sm btn-outline-secondary action-btn"
                       to={"/settings"}
                     >
-                      <SettingsIcon fontSize="small" />{" "}
-                      Edit Profile Settings
+                      <SettingsIcon fontSize="small" /> Edit Profile Settings
                     </Link>
                   ) : (
                     <button
-                      style={{
-                        float: "right",
-                        color: "#999",
-                        border: "1px solid #999",
-                        padding: ".25rem .5rem",
-                        fontSize: ".875rem",
-                        borderRadius: ".2rem",
-                        backgroundImage: "none",
-                        backgroundColor: "transparent",
-                      }}
                       className="setting-btn btn btn-sm action-btn btn-outline-secondary"
                       onClick={handleToggleFollow}
                     >
@@ -164,10 +143,7 @@ const UserBanner = () => {
           <Container>
             <div className="row">
               <div className="col-xs-12 col-md-10 offset-md-1">
-                <div
-                  className="articles-toggle"
-                  style={{ margin: "1.5rem 0 -1px" }}
-                >
+                <div className="articles-toggle">
                   <ul
                     className="nav nav-pills outline-active"
                     style={{
@@ -180,20 +156,10 @@ const UserBanner = () => {
                       <NavLink
                         className={
                           location.pathname === `/profile/${username}`
-                            ? "nav-link active"
-                            : "nav-link deactive"
+                            ? "top-bar nav-link active"
+                            : "top-bar nav-link deactive"
                         }
                         to={`/profile/${username}`}
-                        style={{
-                          borderRadius: "0",
-                          border: "none",
-                          borderBottom: "2px solid transparent",
-                          background: "0 0",
-                          color: "#aaa",
-                          textDecoration: "none",
-                          display: "block",
-                          padding: ".5em 1em",
-                        }}
                       >
                         My Articles
                       </NavLink>
@@ -205,18 +171,10 @@ const UserBanner = () => {
                       <NavLink
                         className={
                           location.pathname === `/profile/${username}/favorites`
-                            ? "nav-link active"
-                            : "nav-link "
+                            ? "top-bar nav-link active"
+                            : "top-bar nav-link "
                         }
                         to={`/profile/${username}/favorites`}
-                        style={{
-                          borderRadius: "0",
-                          border: "none",
-                          borderBottom: "2px solid transparent",
-                          background: "0 0",
-                          color: "#aaa",
-                          textDecoration: "none",
-                        }}
                       >
                         Favorited Articles
                       </NavLink>

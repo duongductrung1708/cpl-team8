@@ -78,3 +78,136 @@
 .thinkster:hover {
   text-decoration: underline !important;
 }
+
+.user-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+
+.setting-btn {
+  float: right;
+  color: #999 !important;
+  border: 1px solid #999 !important;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  border-radius: 0.2rem;
+  background-image: none;
+  background-color: transparent;
+}
+
+.articles-toggle {
+  margin: 1.5rem 0 -1px;
+}
+
+.top-bar {
+  border-radius: 0 !important;
+  border: none;
+  border-bottom: 2px solid transparent !important;
+  background: none;
+  color: #aaa !important;
+  text-decoration: none;
+  display: block;
+  padding: 0.5em 1em;
+}
+
+.article-preview {
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  padding: 1.5rem 0;
+}
+
+.article-meta {
+  margin: 0 0 1rem;
+  display: block;
+  position: relative;
+  font-weight: 300;
+}
+
+.author-avt {
+  display: inline-block;
+  vertical-align: middle;
+  height: 32px;
+  width: 32px;
+  border-radius: 30px;
+  border: 0;
+}
+
+.info {
+  margin: 0 1.5rem 0 .3rem;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1rem;
+}
+
+.date {
+  color: #bbb !important;
+  font-size: .8rem;
+  display: block;
+  line-height: 1rem;
+  font-weight: 300;
+}
+
+.heart-btn {
+  float: right;
+  padding: .25rem .5rem;
+  font-size: .875rem;
+  border-radius: 0.2rem;
+  border-color: #5cb85c !important;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+  border: 1px solid #5cb85c !important;
+}
+
+.preview-link {
+  color: inherit;
+  touch-action: manipulation;
+  text-decoration: none;
+  background: transparent;
+}
+
+.h1-userprofile {
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 3px;
+  margin: .67em 0;
+  margin-top: 0;
+}
+
+.p-userprofile {
+  font-weight: 300;
+  color: #999 !important;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.3rem;
+  margin-top: 0;
+}
+
+.span-userprofile {
+  max-width: 30%;
+  font-size: .8rem;
+  font-weight: 300;
+  color: #bbb !important;
+  vertical-align: middle;
+}
+
+.link-img {
+  touch-action: manipulation;
+  color: #5cb85c !important;
+  text-decoration: none;
+  background: transparent;
+}
+
+.author {
+  display: block;
+  font-weight: 500;
+  touch-action: manipulation;
+  color: #5cb85c !important;
+  text-decoration: none;
+  background-color: transparent;
+}

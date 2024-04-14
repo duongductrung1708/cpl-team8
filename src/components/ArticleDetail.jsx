@@ -414,7 +414,7 @@ const ArticleDetail = () => {
             <div className="row">
               <div
                 className="than col-xs-12 col-md-8 offset-md-2"
-                style={{ marginBottom: "50px" }}
+                style={{ marginBottom: "120px" }}
               >
                 {isLoggedIn ? (
                   <form
