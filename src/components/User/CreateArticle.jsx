@@ -1,8 +1,18 @@
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
+import {
+  Container,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import Footer from "../Footer";
 import { useNavigate, useLocation } from "react-router-dom";
 import AuthenticationCheck from "./AuthenticationCheck";
+import ClearIcon from "@mui/icons-material/Clear";
+import "../css/styles.css";
 
 const CreateArticle = () => {
   const nav = useNavigate();
@@ -17,6 +27,8 @@ const CreateArticle = () => {
 
   const [tags, setTags] = useState(existingArticle?.tagList || []);
 
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -24,7 +36,7 @@ const CreateArticle = () => {
   const handleTagChange = (e) => {
     const newTags = e.target.value.split(",").map((tag) => tag.trim());
     setTags(newTags);
-  };  
+  };
 
   const removeTag = (tagToRemove) => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
@@ -32,7 +44,10 @@ const CreateArticle = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setConfirmDialogOpen(true);
+  };
 
+  const handleConfirmPublish = async () => {
     try {
       const method = existingArticle ? "PUT" : "POST";
       const url = existingArticle
@@ -156,22 +171,7 @@ const CreateArticle = () => {
                     {tags.map((tag) => (
                       <span
                         key={tag}
-                        className="tag-default tag pill"
-                        style={{
-                          color: "#fff !important",
-                          fontSize: ".8rem",
-                          paddingTop: ".1rem",
-                          paddingBottom: ".1rem",
-                          whiteSpace: "nowrap",
-                          marginRight: "3px",
-                          marginTop: "3px",
-                          marginBottom: ".2rem",
-                          display: "inline-block",
-                          backgroundColor: "#818a91",
-                          paddingRight: ".6em",
-                          paddingLeft: ".6em",
-                          borderRadius: "10rem",
-                        }}
+                        className="tag-create tag-default tag pill"
                       >
                         <i
                           className="ion-close-round"
@@ -183,52 +183,44 @@ const CreateArticle = () => {
                           }}
                           onClick={() => removeTag(tag)}
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            className="bi bi-x"
-                            viewBox="0 0 16 16"
-                            style={{marginBottom:"2px"}}
-                          >
-                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
-                          </svg>
+                          <ClearIcon fontSize="small" style={{ marginBottom: "2px" }} />
                         </i>
                         {tag}
                       </span>
                     ))}
                   </div>
                 </fieldset>
-                <button
-                  className="btn btn-lg pull-xs-right btn-primary"
+                <Button
+                  variant="contained"
+                  color="success"
                   type="submit"
-                  style={{
-                    float: "right",
-                    padding: ".75rem 1.5rem",
-                    fontSize: "1.25rem",
-                    borderRadius: ".3rem",
-                    backgroundColor: "#5cb85c",
-                    borderColor: "#5cb85c",
-                    display: "inline-block",
-                    fontWeight: "400",
-                    lineHeight: "1.25",
-                    textAlign: "center",
-                    whiteSpace: "nowrap",
-                    verticalAlign: "middle",
-                    cursor: "pointer",
-                    userSelect: "none",
-                    border: "1px solid transparent",
-                  }}
+                  style={{ float: "right" }}
                 >
                   Publish Article
-                </button>
+                </Button>
               </fieldset>
             </form>
           </div>
         </div>
       </Container>
       <Footer />
+      <Dialog
+        open={confirmDialogOpen}
+        onClose={() => setConfirmDialogOpen(false)}
+      >
+        <DialogTitle>Confirm Publish</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to publish this article?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmDialogOpen(false)}>Cancel</Button>
+          <Button onClick={handleConfirmPublish} autoFocus>
+            Publish
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

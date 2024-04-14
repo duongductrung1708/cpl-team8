@@ -2,17 +2,27 @@ import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import './css/styles.css';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
     password: "",
     email: "",
+    showPassword: false,
   });
 
   const [errorMessages, setErrorMessages] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
 
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const togglePasswordVisibility = () => {
+    setFormData({ ...formData, showPassword: !formData.showPassword });
   };
 
   const login = async (e) => {
@@ -21,6 +31,7 @@ const SignIn = () => {
 
     if (!formData.email || !formData.password) {
       setErrorMessages(["Email or Password can't be blank"]);
+      setOpenDialog(true);
       return;
     }
 
@@ -46,15 +57,22 @@ const SignIn = () => {
             (error) => error
           );
           setErrorMessages(["Email or Password is incorrect"]);
+          setOpenDialog(true);
         } else {
           setErrorMessages(["Email or Password is incorrect"]);
+          setOpenDialog(true);
         }
         console.error("Error:", responseData.errors);
       }
     } catch (error) {
       console.error("Error:", error);
       setErrorMessages(["An error occurred. Please try again."]);
+      setOpenDialog(true);
     }
+  };
+
+  const handleClose = () => {
+    setOpenDialog(false);
   };
 
   return (
@@ -72,13 +90,6 @@ const SignIn = () => {
                 Need an account?
               </Link>
             </p>
-            {errorMessages && errorMessages.length > 0 && (
-              <ul className="text-danger fw-bold" variant="danger">
-                {errorMessages.map((message, index) => (
-                  <li key={index}>{message}</li>
-                ))}
-              </ul>
-            )}
             <Form>
               <Form.Group style={{ marginBottom: "1rem" }}>
                 <Form.Control
@@ -102,12 +113,17 @@ const SignIn = () => {
                     fontSize: "1.25rem",
                     borderRadius: "0.3rem",
                   }}
-                  type="password"
+                  type={formData.showPassword ? "text" : "password"}
                   placeholder="Password"
                   name="password"
                   value={formData.password}
                   onChange={changeHandler}
                 />
+                {formData.showPassword ? (
+                  <VisibilityOffIcon className="eye-position" onClick={togglePasswordVisibility} />
+                ) : (
+                  <VisibilityIcon className="eye-position" onClick={togglePasswordVisibility} />
+                )}
               </Form.Group>
               <Button
                 variant="primary"
@@ -127,6 +143,21 @@ const SignIn = () => {
         </Row>
       </Container>
       <Footer />
+      <Dialog open={openDialog} onClose={handleClose}>
+        <DialogTitle>Error</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {errorMessages.map((message, index) => (
+              <div key={index}>{message}</div>
+            ))}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary" autoFocus>
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

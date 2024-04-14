@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import './css/styles.css';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
     email: "",
+    showPassword: false,
   });
 
   const [errorMessages, setErrorMessages] = useState([]);
 
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const togglePasswordVisibility = () => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      showPassword: !prevFormData.showPassword,
+    }));
   };
 
   const signup = async (e) => {
@@ -52,16 +63,12 @@ const SignUp = () => {
     }
   };
 
-  useEffect(() => {
-    setErrorMessages([]);
-  }, []);
-
   return (
     <div className="auth-page">
       <Container style={{ marginTop: "1.5rem" }}>
         <Row className="justify-content-md-center">
           <Col md={6}>
-            <h1 className="text-center">Sign Up</h1>
+            <h1 className="text-center">Sign up</h1>
             <p className="text-center">
               <Link
                 to={"/signin"}
@@ -115,12 +122,17 @@ const SignUp = () => {
                     fontSize: "1.25rem",
                     borderRadius: "0.3rem",
                   }}
-                  type="password"
+                  type={formData.showPassword ? "text" : "password"}
                   placeholder="Password"
                   name="password"
                   value={formData.password}
                   onChange={changeHandler}
                 />
+                {formData.showPassword ? (
+                  <VisibilityOffIcon className="eye-position1" onClick={togglePasswordVisibility} />
+                ) : (
+                  <VisibilityIcon className="eye-position1" onClick={togglePasswordVisibility} />
+                )}
               </Form.Group>
               <Button
                 variant="primary"

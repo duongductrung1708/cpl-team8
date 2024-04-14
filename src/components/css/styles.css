@@ -113,7 +113,7 @@
 }
 
 .article-preview {
-  border-top: 1px solid rgba(0, 0, 0, .1);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   padding: 1.5rem 0;
 }
 
@@ -134,7 +134,7 @@
 }
 
 .info {
-  margin: 0 1.5rem 0 .3rem;
+  margin: 0 1.5rem 0 0.3rem;
   display: inline-block;
   vertical-align: middle;
   line-height: 1rem;
@@ -142,7 +142,7 @@
 
 .date {
   color: #bbb !important;
-  font-size: .8rem;
+  font-size: 0.8rem;
   display: block;
   line-height: 1rem;
   font-weight: 300;
@@ -150,8 +150,8 @@
 
 .heart-btn {
   float: right;
-  padding: .25rem .5rem;
-  font-size: .875rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
   border-radius: 0.2rem;
   border-color: #5cb85c !important;
   font-weight: 400;
@@ -175,7 +175,7 @@
   font-weight: 600;
   font-size: 1.5rem;
   margin-bottom: 3px;
-  margin: .67em 0;
+  margin: 0.67em 0;
   margin-top: 0;
 }
 
@@ -190,7 +190,7 @@
 
 .span-userprofile {
   max-width: 30%;
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: 300;
   color: #bbb !important;
   vertical-align: middle;
@@ -210,4 +210,43 @@
   color: #5cb85c !important;
   text-decoration: none;
   background-color: transparent;
+}
+
+.form-control:focus {
+  border-color: #5cb85c !important;
+  box-shadow: 0 0 5px rgb(111, 219, 111) !important;
+}
+
+.eye-position {
+  position: absolute;
+  top: 258px;
+  right: 520px;
+}
+
+.eye-position1 {
+  position: absolute;
+  top: 325px;
+  right: 520px;
+}
+
+.eye-position2 {
+  position: absolute;
+  bottom: 225px;
+  right: 30px;
+}
+
+.tag-create {
+  color: #fff !important;
+  font-size: 0.8rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
+  white-space: nowrap;
+  margin-right: 3px;
+  margin-top: 3px;
+  margin-bottom: 0.2rem;
+  display: inline-block;
+  background-color: #818a91;
+  padding-right: 0.6em;
+  padding-left: 0.6em;
+  border-radius: 10rem;
 }
