@@ -144,7 +144,7 @@ const HomePage = () => {
           </Container>
         </div>
       )}
-      <Container>
+      <Container style={{marginTop: "2rem"}}>
         <div className="row">
           <div className="col-md-9">
             <div className="border-bottom">
