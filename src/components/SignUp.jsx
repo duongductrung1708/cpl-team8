@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Button, Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText } from "@mui/material";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import './css/styles.css';
+import { Form, Row, Col } from "react-bootstrap";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +16,7 @@ const SignUp = () => {
   });
 
   const [errorMessages, setErrorMessages] = useState([]);
+  const [open, setOpen] = useState(false);
 
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -28,39 +30,46 @@ const SignUp = () => {
   };
 
   const signup = async (e) => {
-    e.preventDefault();
-    console.log("signup", formData);
+  e.preventDefault();
+  console.log("signup", formData);
 
-    try {
-      const response = await fetch("https://api.realworld.io/api/users", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user: formData }),
-      });
+  try {
+    const response = await fetch("https://api.realworld.io/api/users", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: formData }),
+    });
 
-      const responseData = await response.json();
+    const responseData = await response.json();
 
-      if (response.ok) {
-        localStorage.setItem("auth-token", responseData.user.token);
-        window.location.replace("/home");
+    if (response.ok) {
+      localStorage.setItem("auth-token", responseData.user.token);
+      window.location.replace("/home");
+    } else {
+      if (responseData.errors) {
+        const messages = Object.values(responseData.errors).flatMap(
+          (error) => error
+        );
+        setErrorMessages(messages);
+        setOpen(true);
       } else {
-        if (responseData.errors) {
-          const messages = Object.values(responseData.errors).flatMap(
-            (error) => error
-          );
-          setErrorMessages(["Username, Email or Password can't be blank"]);
-        } else {
-          setErrorMessages(["An error occurred. Please try again."]);
-        }
-        console.error("Error:", responseData.errors);
+        setErrorMessages(["An error occurred. Please try again."]);
+        setOpen(true);
       }
-    } catch (error) {
-      console.error("Error:", error);
-      setErrorMessages(["An error occurred. Please try again."]);
+      console.error("Error:", responseData.errors);
     }
+  } catch (error) {
+    console.error("Error:", error);
+    setErrorMessages(["An error occurred. Please try again."]);
+    setOpen(true);
+  }
+};
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -78,13 +87,6 @@ const SignUp = () => {
                 Have an account?
               </Link>
             </p>
-            {errorMessages && errorMessages.length > 0 && (
-              <ul className="text-danger fw-bold" variant="danger">
-                {errorMessages.map((message, index) => (
-                  <li key={index}>{message}</li>
-                ))}
-              </ul>
-            )}
             <Form>
               <Form.Group style={{ marginBottom: "1rem" }}>
                 <Form.Control
@@ -152,6 +154,19 @@ const SignUp = () => {
         </Row>
       </Container>
       <Footer />
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Error</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {errorMessages.map((message, index) => (
+              <div key={index}>{message}</div>
+            ))}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
