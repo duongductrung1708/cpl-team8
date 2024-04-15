@@ -92,6 +92,7 @@ const HomePage = () => {
   };
 
   const handleTagClick = (tag) => {
+    setArticles(null);
     setSelectedTags(tag);
     fetchData(1, "filterfeed", tag);
     setCurrTag("filterfeed");
