@@ -43,9 +43,15 @@ const CreateArticle = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setConfirmDialogOpen(true);
-  };
+  e.preventDefault();
+  
+  if (!formData.articleTitle || !formData.description || !formData.body || tags.length === 0) {
+    alert("Please fill in all required fields.");
+    return;
+  }
+
+  setConfirmDialogOpen(true);
+};
 
   const handleConfirmPublish = async () => {
     try {
