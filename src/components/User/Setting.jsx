@@ -286,7 +286,7 @@ const Setting = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setConfirmUpdateDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleUpdateProfile} autoFocus>Update</Button>
+          <Button onClick={handleUpdateProfile} variant="contained" color="success">Update</Button>
         </DialogActions>
       </Dialog>
       <Dialog
@@ -301,7 +301,7 @@ const Setting = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setConfirmLogoutDialogOpen(false)}>Cancel</Button>
-          <Button onClick={confirmLogout} autoFocus>Logout</Button>
+          <Button onClick={confirmLogout} variant="contained" color="error">Logout</Button>
         </DialogActions>
       </Dialog>
     </div>

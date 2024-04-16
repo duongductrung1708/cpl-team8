@@ -1,6 +1,7 @@
 import React from "react";
 import API from "../api/API";
 import { useNavigate } from "react-router-dom";
+import './css/mobile.css';
 
 const ArticleList = ({ articleList, setArticleList }) => {
   const nav = useNavigate();

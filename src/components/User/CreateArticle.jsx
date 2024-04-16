@@ -8,11 +8,11 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import Footer from "../Footer";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import AuthenticationCheck from "./AuthenticationCheck";
 import ClearIcon from "@mui/icons-material/Clear";
 import "../css/styles.css";
+import "../css/mobile.css";
 
 const CreateArticle = () => {
   const nav = useNavigate();
@@ -97,7 +97,7 @@ const CreateArticle = () => {
 
   return (
     <div className="editor-page">
-      <Container style={{ marginTop: "1.5rem" }}>
+      <Container className="create-container" style={{ marginTop: "1.5rem", marginBottom: "10.3rem" }}>
         <div className="row">
           <div className="col-md-10 offset-md-1 col-xs-12">
             <form onSubmit={handleSubmit}>
@@ -209,7 +209,50 @@ const CreateArticle = () => {
           </div>
         </div>
       </Container>
-      <Footer />
+      <footer className="footer">
+      <Container>
+        <Link
+          className="logo-font"
+          to={"/home"}
+          previewlistener="true"
+          style={{
+            verticalAlign: "middle",
+            color: "#5cb85c",
+            textDecoration: "none",
+            fontWeight: "700",
+            backgroundColor: "transparent",
+          }}
+        >
+          conduit
+        </Link>
+        <span
+          className="attribution"
+          style={{
+            verticalAlign: "middle",
+            marginLeft: "10px",
+            fontSize: ".8rem",
+            color: "#bbb",
+            fontWeight: "300",
+          }}
+        >
+          An interactive learning project from{" "}
+          <Link
+            className="thinkster"
+            to={"https://thinkster.io"}
+            previewlistener="true"
+            style={{
+              touchAction: "manipulation",
+              color: "#5cb85c",
+              textDecoration: "none",
+              backgroundColor: "transparent",
+            }}
+          >
+            Thinkster
+          </Link>
+          . Code &amp; design licensed under MIT.
+        </span>
+      </Container>
+    </footer>
       <Dialog
         open={confirmDialogOpen}
         onClose={() => setConfirmDialogOpen(false)}
@@ -222,7 +265,7 @@ const CreateArticle = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setConfirmDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleConfirmPublish} autoFocus>
+          <Button onClick={handleConfirmPublish} variant="contained" color="success">
             Publish
           </Button>
         </DialogActions>

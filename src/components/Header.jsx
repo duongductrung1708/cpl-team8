@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import "./css/styles.css";
 import EditIcon from '@mui/icons-material/Edit';
 import SettingsIcon from '@mui/icons-material/Settings';
+import './css/mobile.css';
 
 const getUserInfo = async () => {
   try {

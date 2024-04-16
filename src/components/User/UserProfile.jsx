@@ -57,8 +57,8 @@ const getUserArticlesByUsername = async (username, offset) => {
       throw new Error("Failed to fetch user articles");
     }
 
-    const userArticles = await response.json();
-    return userArticles.articles;
+    const { articles, articlesCount } = await response.json();
+    return { articles, articlesCount };
   } catch (error) {
     console.error("Error:", error);
     throw error;
@@ -99,6 +99,7 @@ const UserProfile = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
+  const [totalArticlesCount, setTotalArticlesCount] = useState(0);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -114,14 +115,22 @@ const UserProfile = () => {
     const fetchUserArticles = async () => {
       try {
         const offset = (currentPage - 1) * PAGE_SIZE;
-        const articlesData = await getUserArticlesByUsername(username, offset);
-        setUserArticles(articlesData);
-        setLoading(false);
-        const totalArticlesCount = articlesData.length;
-        const totalPagesCount = Math.ceil(totalArticlesCount / PAGE_SIZE);
+        const { articles, articlesCount } = await getUserArticlesByUsername(
+          username,
+          offset
+        );
+        const updatedArticles = articles.map((article) => ({
+          ...article,
+          favorited: true,
+        }));
+        setUserArticles(updatedArticles);
+        setTotalArticlesCount(articlesCount);
+        const totalPagesCount = Math.ceil(articlesCount / PAGE_SIZE);
         setTotalPages(totalPagesCount);
       } catch (error) {
         console.error("Error fetching user articles:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
