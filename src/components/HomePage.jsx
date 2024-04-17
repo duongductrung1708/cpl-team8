@@ -135,7 +135,7 @@ const HomePage = () => {
               conduit
             </h1>
             <p
-              className="text-secondary text-white text-center"
+              className="text-secondary text-white text-center sub-title"
               style={{
                 fontSize: "1.5rem",
                 fontWeight: "300",

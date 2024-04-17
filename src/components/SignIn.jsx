@@ -106,6 +106,7 @@ const SignIn = () => {
                       padding: "0.75rem 1.5rem",
                       fontSize: "1.25rem",
                       borderRadius: "0.3rem",
+                      border: "1px solid",
                     }}
                     type="email"
                     placeholder="Email"
@@ -121,6 +122,7 @@ const SignIn = () => {
                       padding: "0.75rem 1.5rem",
                       fontSize: "1.25rem",
                       borderRadius: "0.3rem",
+                      border: "1px solid",
                     }}
                     type={formData.showPassword ? "text" : "password"}
                     placeholder="Password"

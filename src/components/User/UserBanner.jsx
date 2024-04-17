@@ -104,10 +104,7 @@ const UserBanner = () => {
     <div className="profile-page">
       {userProfile && (
         <>
-          <div
-            className="user-info text-center"
-            style={{ background: "#f3f3f3", padding: "2rem 0 1rem" }}
-          >
+          <div className="user-info text-center">
             <Container>
               <div className="row">
                 <div className="col-xs-12 col-md-10 offset-md-1">

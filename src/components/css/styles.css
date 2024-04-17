@@ -250,3 +250,23 @@
   padding-left: 0.6em;
   border-radius: 10rem;
 }
+
+.filter-sidebar {
+  background: #f3f3f3 !important;
+  border-radius: 4px;
+  padding: 5px 10px 10px;
+}
+
+.article-preview .preview-link h1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  max-width: 100%;
+}
+
+.user-info {
+  background: #f3f3f3;
+  padding: 2rem 0 1rem;
+}

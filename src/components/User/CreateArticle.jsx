@@ -127,6 +127,7 @@ const CreateArticle = () => {
                         padding: ".75rem 1.5rem",
                         fontSize: "1.25rem",
                         borderRadius: ".3rem",
+                        border: "1px solid",
                       }}
                     />
                   </fieldset>
@@ -145,6 +146,7 @@ const CreateArticle = () => {
                         padding: ".75rem 1.5rem",
                         fontSize: "1.25rem",
                         borderRadius: ".3rem",
+                        border: "1px solid",
                       }}
                     />
                   </fieldset>
@@ -163,6 +165,7 @@ const CreateArticle = () => {
                         padding: ".75rem 1.5rem",
                         fontSize: "1.25rem",
                         borderRadius: ".3rem",
+                        border: "1px solid",
                       }}
                     ></textarea>
                   </fieldset>
@@ -181,6 +184,7 @@ const CreateArticle = () => {
                         padding: ".75rem 1.5rem",
                         fontSize: "1.25rem",
                         borderRadius: ".3rem",
+                        border: "1px solid",
                       }}
                     />
                     <div className="tag-list">
