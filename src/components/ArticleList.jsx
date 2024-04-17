@@ -2,6 +2,7 @@ import React from "react";
 import API from "../api/API";
 import { useNavigate } from "react-router-dom";
 import './css/mobile.css';
+import { Grow } from "@mui/material";
 
 const ArticleList = ({ articleList, setArticleList }) => {
   const nav = useNavigate();
@@ -32,9 +33,9 @@ const ArticleList = ({ articleList, setArticleList }) => {
       )) ||
         (articleList.length === 0 && <div>There is no article yet</div>) ||
         (articleList.length > 0 &&
-          articleList.map((a) => {
+          articleList.map((a, index) => {
             return (
-              <div key={a.slug}>
+              <Grow in={true} key={a.slug} timeout={index * 500}>
                 <div className="article-preview">
                   <div className="article-meta d-flex justify-content-between">
                     <div className="d-flex gap-2 ">
@@ -90,7 +91,7 @@ const ArticleList = ({ articleList, setArticleList }) => {
                     </ul>
                   </a>
                 </div>
-              </div>
+              </Grow>
             );
           }))}
     </div>
