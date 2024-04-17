@@ -8,6 +8,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Pagination from "@mui/material/Pagination";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Grow } from "@mui/material";
 
 const PAGE_SIZE = 5;
 
@@ -189,8 +190,9 @@ const Favorite = () => {
                       <div>There is no article yet</div>
                     )) ||
                     (userArticles.length > 0 &&
-                      userArticles.map((article) => {
+                      userArticles.map((article, index) => {
                         return (
+                          <Grow in={true} key={article.slug} timeout={index * 500}>
                           <div key={article.slug} className="article-preview">
                             <div className="article-meta">
                               <Link
@@ -279,6 +281,7 @@ const Favorite = () => {
                               </ul>
                             </Link>
                           </div>
+                          </Grow>
                         );
                       }))}
                 </div>
