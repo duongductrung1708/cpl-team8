@@ -5,6 +5,7 @@ import API from "../api/API.js";
 import ArticleList from "./ArticleList.jsx";
 import Sidebar from "./Sidebar.jsx";
 import "./css/styles.css";
+import "./css/styles.css";
 
 const HomePage = () => {
   const [articles, setArticles] = useState(null);
