@@ -1,3 +1,120 @@
+body.dark-mode{
+  background-color: rgb(16, 20, 24) !important;
+  color: #eceeef !important;
+}
+
+.dark-mode .bg-light {
+  background-color: rgb(24, 30, 35) !important;
+}
+
+.dark-mode .text-black {
+  color: #eceeef !important;
+}
+
+.dark-mode .text-secondary.navhover {
+  color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;
+}
+
+.dark-mode .text-secondary {
+  color: rgba(var(--bs-secondary-rgb), var(--bs-text-opacity)) !important;
+}
+
+.dark-mode footer {
+  background-color: rgb(24, 30, 35) !important;
+}
+
+.dark-mode .filter-sidebar {
+  background: rgb(24, 30, 35) !important;
+}
+
+.dark-mode .article-preview {
+  border-top: 1px solid rgb(24, 30, 35) !important;
+}
+
+.dark-mode .navbar-toggler {
+  border-color: #eceeef !important;
+}
+
+.dark-mode .navbar-toggler-icon {
+  color: #eceeef !important;
+}
+
+.dark-mode .nav-item.false:hover {
+  color: #eceeef !important;
+}
+
+.dark-mode textarea {
+  background: rgb(16, 20, 24) !important;
+  color: #eceeef !important;
+}
+
+.dark-mode textarea::placeholder {
+  color: #eceeef !important;
+}
+
+.dark-mode .article-page .card .card-footer {
+  background: rgb(24, 30, 35) !important;
+}
+
+.dark-mode .card-block {
+  background: rgb(16, 20, 24) !important;
+  color: #eceeef !important;
+}
+
+.dark-mode .mod-options {
+  color: #eceeef !important;
+}
+
+.dark-mode .mod-options:hover {
+  color: #ffffff !important;
+}
+
+.dark-mode input {
+  background: rgb(16, 20, 24) !important;
+  color: #eceeef !important;
+}
+
+.dark-mode input::placeholder {
+  color: #eceeef !important;
+}
+
+.dark-mode .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root.Mui-disabled {
+  color: #6f6f6f !important;
+}
+
+.dark-mode .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root {
+  border: 1px solid #eceeef;
+  color: #eceeef;
+}
+
+.dark-mode .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root:hover {
+  background: #6f6f6f !important;
+}
+
+.dark-mode .css-19xm0h7-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected {
+  background-color: #6f6f6f !important;
+}
+
+.dark-mode .css-1v2lvtn-MuiPaginationItem-root {
+  color: #6f6f6f !important;;
+}
+
+.dark-mode .user-info {
+  background: rgb(19, 25, 29) !important;
+}
+
+.dark-mode .nav-link.active {
+  background: transparent !important;
+}
+
+.dark-mode .nav-link.deactive:hover {
+  color: #ffffff !important;
+}
+
+.dark-mode .sub-title {
+  color: #ececec !important;
+}
+
 .nav-item {
   color: #aaa;
 }

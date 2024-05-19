@@ -1,6 +1,8 @@
 import React from "react";
 import API from "../api/API";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import './css/mobile.css';
+import { Grow } from "@mui/material";
 
 const ArticleList = ({ articleList, setArticleList }) => {
   const nav = useNavigate();
@@ -31,29 +33,29 @@ const ArticleList = ({ articleList, setArticleList }) => {
       )) ||
         (articleList.length === 0 && <div>There is no article yet</div>) ||
         (articleList.length > 0 &&
-          articleList.map((a) => {
+          articleList.map((a, index) => {
             return (
-              <div key={a.slug}>
+              <Grow in={true} key={a.slug} timeout={index * 500}>
                 <div className="article-preview">
                   <div className="article-meta d-flex justify-content-between">
                     <div className="d-flex gap-2 ">
-                      <a
+                      <Link
                         className="d-flex flex-column justify-content-center avatar"
-                        href={`/profile/${a.author.username}`}
+                        to={`/profile/${a.author.username}`}
                       >
                         <img
                           decoding="sync"
                           src={`${a.author.image}`}
                           alt="author avater"
                         />
-                      </a>
+                      </Link>
                       <div className="info d-flex flex-column ">
-                        <a
+                        <Link
                           className="author"
-                          href={`/profile/${a.author.username}`}
+                          to={`/profile/${a.author.username}`}
                         >
                           {a.author.username}
-                        </a>
+                        </Link>
                         <span className="date">January 4, 2024</span>
                       </div>
                     </div>
@@ -71,7 +73,7 @@ const ArticleList = ({ articleList, setArticleList }) => {
                       </button>
                     </div>
                   </div>
-                  <a className="preview-link" href={`/article/${a.slug}`}>
+                  <Link className="preview-link" to={`/article/${a.slug}`}>
                     <h1>{a.title}</h1>
                     <p>{a.description}</p>
                     <span>Read more...</span>
@@ -87,9 +89,9 @@ const ArticleList = ({ articleList, setArticleList }) => {
                         );
                       })}
                     </ul>
-                  </a>
+                  </Link>
                 </div>
-              </div>
+              </Grow>
             );
           }))}
     </div>

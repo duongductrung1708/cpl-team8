@@ -5,7 +5,8 @@ import API from "../api/API.js";
 import ArticleList from "./ArticleList.jsx";
 import Sidebar from "./Sidebar.jsx";
 import "./css/styles.css";
-import "./css/styles.css";
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 const HomePage = () => {
   const [articles, setArticles] = useState(null);
@@ -101,9 +102,9 @@ const HomePage = () => {
     setTotalPages(0)
   };
 
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    fetchData(page, currTag);
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+    fetchData(value, currTag);
   };
 
   return (
@@ -134,7 +135,7 @@ const HomePage = () => {
               conduit
             </h1>
             <p
-              className="text-secondary text-white text-center"
+              className="text-secondary text-white text-center sub-title"
               style={{
                 fontSize: "1.5rem",
                 fontWeight: "300",
@@ -147,7 +148,7 @@ const HomePage = () => {
         </div>
       )}
       <Container style={{marginTop: "2rem"}}>
-        <div className="row">
+        <div className="row sliderlist-filter">
           <div className="col-md-9">
             <div className="border-bottom">
               <ul className="nav">
@@ -192,26 +193,17 @@ const HomePage = () => {
           </div>
         </div>
         <div>
-          <nav>
-            <ul className="pagination" style={{ marginBottom: "100px" }}>
-              {[...Array(totalPages).keys()].map((page) => (
-                <li
-                  className={`page-item ${
-                    page + 1 === currentPage ? "active" : ""
-                  }`}
-                  key={page}
-                >
-                  <div
-                    style={{ float: "left", cursor: "pointer" }}
-                    className="page-link"
-                    onClick={() => handlePageChange(page + 1)}
-                  >
-                    {page + 1}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          <div className="pagination-container d-flex justify-content-center mt-4" style={{ marginBottom: "100px" }}>
+            <Stack spacing={2}>
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={handlePageChange}
+                variant="outlined"
+                shape="rounded"
+              />
+            </Stack>
+          </div>
         </div>
       </Container>
 

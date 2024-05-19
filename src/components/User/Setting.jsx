@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
+import { Container, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Fade } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer";
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -126,185 +126,187 @@ const Setting = () => {
   };
 
   return (
-    <div>
-      <div className="settings-page">
-        <Container className="page" style={{ marginTop: "1.5rem" }}>
-          <div className="row">
-            <div
-              className="col-md-6 offset-md-3 col-xs-12 position-relative"
-              style={{
-                minHeight: "1px",
-                paddingLeft: "15px",
-                paddingRight: "15px",
-              }}
-            >
-              <h1 className="text-center">Your Settings</h1>
-              {error && (
-                <ul className="text-danger fw-bold">
-                  <li>{error}</li>
-                </ul>
-              )}
-              <form onSubmit={(e) => { e.preventDefault(); setConfirmUpdateDialogOpen(true); }}>
-                <fieldset>
-                  <fieldset
-                    className="form-group"
-                    style={{ marginBottom: "1rem" }}
-                  >
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder="URL of profile picture"
-                      name="image"
-                      value={formData.image}
-                      onChange={handleChange}
-                      style={{
-                        padding: ".75rem 1.5rem",
-                        fontSize: "1.25rem",
-                        borderRadius: ".3rem",
-                      }}
-                    />
-                  </fieldset>
-                  <fieldset
-                    className="form-group"
-                    style={{ marginBottom: "1rem" }}
-                  >
-                    <input
-                      className="form-control form-control-lg"
-                      type="text"
-                      placeholder="Your Name"
-                      name="username"
-                      value={formData.username}
-                      onChange={handleChange}
-                      style={{
-                        padding: ".75rem 1.5rem",
-                        fontSize: "1.25rem",
-                        borderRadius: ".3rem",
-                      }}
-                    />
-                  </fieldset>
-                  <fieldset
-                    className="form-group"
-                    style={{ marginBottom: "1rem" }}
-                  >
-                    <textarea
-                      className="form-control form-control-lg"
-                      rows="8"
-                      placeholder="Short bio about you"
-                      name="bio"
-                      value={formData.bio}
-                      onChange={handleChange}
-                      style={{
-                        padding: ".75rem 1.5rem",
-                        fontSize: "1.25rem",
-                        borderRadius: ".3rem",
-                      }}
-                    ></textarea>
-                  </fieldset>
-                  <fieldset
-                    className="form-group"
-                    style={{ marginBottom: "1rem" }}
-                  >
-                    <input
-                      className="form-control form-control-lg"
-                      type="text"
-                      placeholder="Email"
-                      name="email"
-                      value={formData.email}
-                      style={{
-                        padding: ".75rem 1.5rem",
-                        fontSize: "1.25rem",
-                        borderRadius: ".3rem",
-                      }}
-                      disabled
-                    />
-                  </fieldset>
-                  <fieldset
-                    className="form-group"
-                    style={{ marginBottom: "1rem" }}
-                  >
-                    <div className="password-input-container">
+    <Fade in={true}>
+      <div>
+        <div className="settings-page">
+          <Container className="page" style={{ marginTop: "1.5rem" }}>
+            <div className="row">
+              <div
+                className="col-md-6 offset-md-3 col-xs-12 position-relative"
+                style={{
+                  minHeight: "1px",
+                  paddingLeft: "15px",
+                  paddingRight: "15px",
+                }}
+              >
+                <h1 className="text-center">Your Settings</h1>
+                {error && (
+                  <ul className="text-danger fw-bold">
+                    <li>{error}</li>
+                  </ul>
+                )}
+                <form onSubmit={(e) => { e.preventDefault(); setConfirmUpdateDialogOpen(true); }}>
+                  <fieldset>
+                    <fieldset
+                      className="form-group"
+                      style={{ marginBottom: "1rem" }}
+                    >
                       <input
-                        className="form-control form-control-lg"
-                        type={formData.showPassword ? "text" : "password"}
-                        placeholder="Password"
-                        name="password"
-                        value={formData.password}
+                        className="form-control"
+                        type="text"
+                        placeholder="URL of profile picture"
+                        name="image"
+                        value={formData.image}
                         onChange={handleChange}
                         style={{
                           padding: ".75rem 1.5rem",
                           fontSize: "1.25rem",
                           borderRadius: ".3rem",
+                          border: "1px solid",
                         }}
                       />
-                      <div className="visibility-icon-container">
-                        {formData.showPassword ? (
-                          <VisibilityOffIcon className="eye-position2" onClick={(e) => { e.stopPropagation(); togglePasswordVisibility(); }} />
-                        ) : (
-                          <VisibilityIcon className="eye-position2" onClick={(e) => { e.stopPropagation(); togglePasswordVisibility(); }} />
-                        )}
+                    </fieldset>
+                    <fieldset
+                      className="form-group"
+                      style={{ marginBottom: "1rem" }}
+                    >
+                      <input
+                        className="form-control form-control-lg"
+                        type="text"
+                        placeholder="Your Name"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        style={{
+                          padding: ".75rem 1.5rem",
+                          fontSize: "1.25rem",
+                          borderRadius: ".3rem",
+                          border: "1px solid",
+                        }}
+                      />
+                    </fieldset>
+                    <fieldset
+                      className="form-group"
+                      style={{ marginBottom: "1rem" }}
+                    >
+                      <textarea
+                        className="form-control form-control-lg"
+                        rows="8"
+                        placeholder="Short bio about you"
+                        name="bio"
+                        value={formData.bio}
+                        onChange={handleChange}
+                        style={{
+                          padding: ".75rem 1.5rem",
+                          fontSize: "1.25rem",
+                          borderRadius: ".3rem",
+                          border: "1px solid",
+                        }}
+                      ></textarea>
+                    </fieldset>
+                    <fieldset
+                      className="form-group"
+                      style={{ marginBottom: "1rem" }}
+                    >
+                      <input
+                        className="form-control form-control-lg"
+                        type="text"
+                        placeholder="Email"
+                        name="email"
+                        value={formData.email}
+                        style={{
+                          padding: ".75rem 1.5rem",
+                          fontSize: "1.25rem",
+                          borderRadius: ".3rem",
+                          border: "1px solid",
+                        }}
+                        disabled
+                      />
+                    </fieldset>
+                    <fieldset
+                      className="form-group"
+                      style={{ marginBottom: "1rem" }}
+                    >
+                      <div className="password-input-container">
+                        <input
+                          className="form-control form-control-lg"
+                          type={formData.showPassword ? "text" : "password"}
+                          placeholder="Password"
+                          name="password"
+                          value={formData.password}
+                          onChange={handleChange}
+                          style={{
+                            padding: ".75rem 1.5rem",
+                            fontSize: "1.25rem",
+                            borderRadius: ".3rem",
+                            border: "1px solid",
+                          }}
+                        />
+                        <div className="visibility-icon-container">
+                          {formData.showPassword ? (
+                            <VisibilityOffIcon className="eye-position2" onClick={(e) => { e.stopPropagation(); togglePasswordVisibility(); }} />
+                          ) : (
+                            <VisibilityIcon className="eye-position2" onClick={(e) => { e.stopPropagation(); togglePasswordVisibility(); }} />
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </fieldset>
-                  <button
+                    </fieldset>
+                    <Button
+                      variant="contained"
+                    color="success"
                     type="submit"
-                    className="btn btn-lg btn-primary"
-                    style={{
-                      float: "right",
-                      padding: ".75rem 1.5rem",
-                      fontSize: "1.25rem",
-                      borderRadius: ".3rem",
-                      backgroundColor: "#5cb85c",
-                      borderColor: "#5cb85c",
-                    }}
-                  >
-                    Update Settings
-                  </button>
-                </fieldset>
-              </form>
-              <hr />
-              <button
-                className="btn btn-outline-danger"
-                style={{ marginBottom: "5rem" }}
-                onClick={() => setConfirmLogoutDialogOpen(true)}
-              >
-                Or click here to logout.
-              </button>
+                    style={{ float: "right"
+                      }}
+                    >
+                      Update Settings
+                    </Button>
+                  </fieldset>
+                </form>
+                <hr />
+                <button
+                  className="btn btn-outline-danger"
+                  style={{ marginBottom: "3rem" }}
+                  onClick={() => setConfirmLogoutDialogOpen(true)}
+                >
+                  Or click here to logout.
+                </button>
+              </div>
             </div>
-          </div>
-        </Container>
+          </Container>
+        </div>
+        <Footer />
+        <Dialog
+          open={confirmUpdateDialogOpen}
+          onClose={() => setConfirmUpdateDialogOpen(false)}
+        >
+          <DialogTitle>Confirm Update</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to update your profile?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setConfirmUpdateDialogOpen(false)}>Cancel</Button>
+            <Button onClick={handleUpdateProfile} variant="contained" color="success">Update</Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={confirmLogoutDialogOpen}
+          onClose={() => setConfirmLogoutDialogOpen(false)}
+        >
+          <DialogTitle>Confirm Logout</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to logout?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setConfirmLogoutDialogOpen(false)}>Cancel</Button>
+            <Button onClick={confirmLogout} variant="contained" color="error">Logout</Button>
+          </DialogActions>
+        </Dialog>
       </div>
-      <Footer />
-      <Dialog
-        open={confirmUpdateDialogOpen}
-        onClose={() => setConfirmUpdateDialogOpen(false)}
-      >
-        <DialogTitle>Confirm Update</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to update your profile?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setConfirmUpdateDialogOpen(false)}>Cancel</Button>
-          <Button onClick={handleUpdateProfile} autoFocus>Update</Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog
-        open={confirmLogoutDialogOpen}
-        onClose={() => setConfirmLogoutDialogOpen(false)}
-      >
-        <DialogTitle>Confirm Logout</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to logout?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setConfirmLogoutDialogOpen(false)}>Cancel</Button>
-          <Button onClick={confirmLogout} autoFocus>Logout</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    </Fade>
   );
 };
 

@@ -15,7 +15,7 @@ const Sidebar = ({ tagList, handleTagClick }) => {
   };
 
   return (
-    <div className="container" style={{ background: '#f3f3f3', borderRadius: '4px', padding: '5px 10px 10px' }}>
+    <div className="container filter-sidebar">
       <p>Popular Tags</p>
       <div className="tag-list">
         {tagList === null ? (

@@ -2,6 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import "./css/articledetailstyle.css";
 import { Container } from "react-bootstrap";
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material";
 
 const ArticleDetail = () => {
   const { slug } = useParams();
@@ -20,6 +27,8 @@ const ArticleDetail = () => {
 
   const [isAuthor, setIsAuthor] = useState(false);
   const [userProfileImage, setUserProfileImage] = useState("");
+
+  const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
 
@@ -100,6 +109,7 @@ const ArticleDetail = () => {
   };
 
   const handleDeleteArticle = async () => {
+    setOpen(false);
     try {
       const response = await fetch(
         `https://api.realworld.io/api/articles/${slug}`,
@@ -129,7 +139,6 @@ const ArticleDetail = () => {
   const handleLoginRedirect = () => {
     navigate("/signup");
   };
- 
 
   const toggleFollow = async () => {
     if (!isLoggedIn || isFollowingLoading) {
@@ -280,8 +289,6 @@ const ArticleDetail = () => {
     }
   };
 
-
-
   return (
     <div className="article-page">
       {article && !loading && (
@@ -323,7 +330,7 @@ const ArticleDetail = () => {
                     &nbsp;
                     <button
                       className="btn btn-outline-danger btn-sm"
-                      onClick={handleDeleteArticle}
+                      onClick={() => setOpen(true)}
                     >
                       <i className="ion-trash-a"></i>
                       <svg
@@ -344,7 +351,6 @@ const ArticleDetail = () => {
                     <button
                       className="btn btn-sm action-btn btn-outline-secondary"
                       onClick={toggleFollow}
-                      
                     >
                       <i className="ion-plus-round"></i>
                       <svg
@@ -414,7 +420,7 @@ const ArticleDetail = () => {
             <div className="row">
               <div
                 className="than col-xs-12 col-md-8 offset-md-2"
-                style={{ marginBottom: "120px" }}
+                style={{ marginBottom: "105px" }}
               >
                 {isLoggedIn ? (
                   <form
@@ -497,55 +503,74 @@ const ArticleDetail = () => {
                     </div>
                   </div>
                 ))}
+                <Dialog open={open} onClose={() => setOpen(false)}>
+                  <DialogTitle>Delete Article</DialogTitle>
+                  <DialogContent>
+                    Are you sure you want to delete this article?
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={() => setOpen(false)}>Cancel</Button>
+                    <Button
+                      onClick={handleDeleteArticle}
+                      variant="contained"
+                      color="error"
+                    >
+                      Delete
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </div>
             </div>
           </div>
         </div>
       )}
-      <footer className="footer not-has-content" style={{position: "relative", bottom: 0}}>
-      <Container>
-        <Link
-          className="logo-font"
-          to={"/home"}
-          previewlistener="true"
-          style={{
-            verticalAlign: "middle",
-            color: "#5cb85c",
-            textDecoration: "none",
-            fontWeight: "700",
-            backgroundColor: "transparent",
-          }}
-        >
-          conduit
-        </Link>
-        <span
-          className="attribution"
-          style={{
-            verticalAlign: "middle",
-            marginLeft: "10px",
-            fontSize: ".8rem",
-            color: "#bbb",
-            fontWeight: "300",
-          }}
-        >
-          An interactive learning project from{" "}
+      <footer
+        className="footer not-has-content"
+        style={{ position: "relative", bottom: 0 }}
+      >
+        <Container>
           <Link
-            className="thinkster"
-            to={"https://thinkster.io"}
+            className="logo-font"
+            to={"/home"}
             previewlistener="true"
             style={{
-              touchAction: "manipulation",
+              verticalAlign: "middle",
               color: "#5cb85c",
               textDecoration: "none",
+              fontWeight: "700",
               backgroundColor: "transparent",
             }}
           >
-            Thinkster
+            conduit
           </Link>
-          . Code &amp; design licensed under MIT.
-        </span>
-      </Container>
-    </footer>
+          <span
+            className="attribution"
+            style={{
+              verticalAlign: "middle",
+              marginLeft: "10px",
+              fontSize: ".8rem",
+              color: "#bbb",
+              fontWeight: "300",
+            }}
+          >
+            An interactive learning project from{" "}
+            <Link
+              className="thinkster"
+              to={"https://thinkster.io"}
+              previewlistener="true"
+              style={{
+                touchAction: "manipulation",
+                color: "#5cb85c",
+                textDecoration: "none",
+                backgroundColor: "transparent",
+              }}
+            >
+              Thinkster
+            </Link>
+            . Code &amp; design licensed under MIT.
+          </span>
+        </Container>
+      </footer>
     </div>
   );
 };
